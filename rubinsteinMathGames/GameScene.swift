@@ -21,6 +21,7 @@ class GameScene: SKScene {
     var frameOffset: Int = 0
     var frameOffsetX: Int = 0
     var cRad: CGFloat = 35.0
+    var numFrameY: CGFloat = -600.0
     var squareColor: UIColor = UIColor(red: 0.8784, green: 0.8588, blue: 0.7098, alpha: 1.0)
     // var squareColor: UIColor = UIColor(red: 0.8392, green: 0.7961, blue: 0, alpha: 1.0) // UIColor.yellow
     var nodelist: [SKShapeNode] = []
@@ -112,7 +113,7 @@ class GameScene: SKScene {
     
     func makeNumbers() {
         let numberFrame2 = SKSpriteNode(color: UIColor.clear, size: CGSize(width: screenWidth, height: 200))
-        numberFrame2.position = CGPoint(x: 0, y: -600)
+        numberFrame2.position = CGPoint(x: 0, y: numFrameY)
         numberFrame2.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         numberFrame2.zPosition = 3
         let numberFrame = SKShapeNode(rect: CGRect(x: -screenWidth/2, y: -600, width: screenWidth, height: 200.0))
@@ -139,7 +140,7 @@ class GameScene: SKScene {
             tritext.position = CGPoint(x: 80*(i-5), y: 0) // hardcoded for now
             // tritext.position = CGPoint(x: framesize/(nSize*2), y: framesize/(nSize*2))
             tritext.name = "numtext"+String(i)
-            tritext.zPosition = 5
+            tritext.zPosition = 10
             numberFrame2.addChild(tritext)
         }  //for i in 1...9
         // self.addChild(numberFrame)
@@ -233,6 +234,16 @@ class GameScene: SKScene {
     } // func touchesMoved
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("touch ended")
+
+        var nodeName = "redCounter"
+        var circleName = "//mover"
+        if movingBlue {
+            nodeName = "blueCounter"
+        }
+        let redC = childNode(withName: nodeName) as! SKShapeNode
+        let moveC = childNode(withName: circleName) as! SKShapeNode
+        redC.position.x = moveC.position.x
+        redC.position.y = numFrameY
         movingRed = false
         movingBlue = false
     } // func touchesEnded
