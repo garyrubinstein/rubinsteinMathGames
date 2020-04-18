@@ -7,83 +7,234 @@
 //
 
 import SpriteKit
-import GameplayKit
+// import GameplayKit
 
 class GameScene: SKScene {
+    var screenWidth: CGFloat = 0.0
+    var screenHeight: CGFloat = 0.0
+    var theSize: CGFloat = 0.0
+    var nSize: Int = 6
+    var board: [Int] = []
+    var framesize: Int = 0
+    var scalePieces: CGFloat = 1.4
+    var theMode: Int = 0
+    var frameOffset: Int = 0
+    var frameOffsetX: Int = 0
+    var cRad: CGFloat = 35.0
+    var squareColor: UIColor = UIColor(red: 0.8784, green: 0.8588, blue: 0.7098, alpha: 1.0)
+    // var squareColor: UIColor = UIColor(red: 0.8392, green: 0.7961, blue: 0, alpha: 1.0) // UIColor.yellow
+    var nodelist: [SKShapeNode] = []
+    var textnodelist: [SKLabelNode] = []
+    var numberList: [Int] = []
+    var redCounter: SKShapeNode = SKShapeNode()
+    var blueCounter: SKShapeNode = SKShapeNode()
+    var redMoveCircle: SKShapeNode = SKShapeNode()
+
+    var movingRed: Bool = false
+    var movingBlue: Bool = false
+
     
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
+    // private var label : SKLabelNode?
+    //private var spinnyNode : SKShapeNode?
     
     override func didMove(to view: SKView) {
-        
-        // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
+        let screenSize: CGRect = UIScreen.main.bounds
+        screenWidth = self.size.width //screenSize.width
+        screenHeight = self.size.height // screenSize.height
+        print(screenWidth)
+        print(screenHeight)
+        theSize = min(screenWidth,screenHeight)
+        print("theSize")
+        print(theSize)
+        // addMoveList()
+        framesize = Int(2/3*theSize*scalePieces)
+        initialize()
+    
+    }
+    
+    func initialize() {
+        // makeCounters()
+        if nSize==6 {
+            numberList = [1,2,3,4,5,6,7,8,9,10,12,14,15,16,18,20,21, 24,
+            25, 27, 28, 30, 32, 35, 36, 40, 42, 45, 48, 49, 54, 56, 63, 64,
+            72, 81]
         }
-        
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
-        
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
+        let myframe = SKShapeNode(rect: CGRect(x: -framesize/2-frameOffsetX, y: -framesize/2-frameOffset, width: framesize, height: framesize))
+        myframe.fillColor = UIColor.red
+        myframe.zPosition = 3 // this was 3
+        myframe.name = "frame"
+        self.addChild(myframe)
+        for i in 0...(nSize*nSize-1) {
+            // print(i)
+            board.append(Int(i+1))
+            let row = Int(i/nSize)
+            let column = i%nSize
+            var squareWidth: CGFloat = CGFloat(framesize/nSize)
+            var squareHeight: CGFloat = CGFloat(framesize/nSize)
+
+            let gamePiece = SKShapeNode(rect: CGRect(x: 0, y: 0, width: squareWidth, height: squareWidth))
+            gamePiece.name = "piece,"+String(i)
+            gamePiece.fillColor = squareColor
+
+            gamePiece.strokeColor = UIColor.black
+            gamePiece.zPosition = 4
+            // let gamePiecePosition = CGPoint(x: -framesize/2+column*framesize/puzzleSize, y: framesize/2-framesize/puzzleSize-row*framesize/puzzleSize-frameOffset)
+            let gamePiecePosition = CGPoint(x: -framesize/2+column*framesize/nSize-frameOffsetX, y: framesize/2-framesize/nSize-row*framesize/nSize-frameOffset)
             
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
-        }
-    }
+            
+            // originalPositions.append(gamePiecePosition)
+            // gamePiece.position = CGPoint(x: -framesize/2+column*framesize/puzzleSize, y: framesize/2-framesize/puzzleSize-row*framesize/puzzleSize-frameOffset)
+            gamePiece.position = gamePiecePosition
+         
+            
+            
+            let tritext = SKLabelNode(text: String(numberList[i]))
+            tritext.fontColor = UIColor.black
+            tritext.fontName = "AvenirNext-Bold"
+            tritext.fontSize = 64
+            tritext.horizontalAlignmentMode = .center
+            tritext.verticalAlignmentMode = .center
+            tritext.position = CGPoint(x: framesize/(nSize*2), y: framesize/(nSize*2))
+            tritext.name = "text"+String(i+1)
+            tritext.zPosition = 1
+            textnodelist.append(tritext)
+            gamePiece.addChild(tritext)
+            nodelist.append(gamePiece)
+            myframe.addChild(gamePiece)
+            // tritext.position = CGPoint(x: 0, y: 0)
+            // self.addChild(myflash)
+            // makeNumbers()
+            // makeCounters()
+        } // for i in 0...(nSize*nSize-1) {
+        makeCounters()
+        makeNumbers()
+    } // func initialize()
     
+    func makeNumbers() {
+        let numberFrame2 = SKSpriteNode(color: UIColor.clear, size: CGSize(width: screenWidth, height: 200))
+        numberFrame2.position = CGPoint(x: 0, y: -600)
+        numberFrame2.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        numberFrame2.zPosition = 3
+        let numberFrame = SKShapeNode(rect: CGRect(x: -screenWidth/2, y: -600, width: screenWidth, height: 200.0))
+        numberFrame.fillColor = UIColor.red
+        numberFrame.zPosition = 3 // this was 3
+        numberFrame.name = "numberframe"
+        // self.addChild(numberFrame)
+        redMoveCircle = SKShapeNode(circleOfRadius: cRad)
+        redMoveCircle.name = "mover"
+        redMoveCircle.strokeColor = UIColor.red
+        redMoveCircle.lineWidth = 10.0
+        redMoveCircle.position = CGPoint(x: 80*(1-5), y: 0)
+        redMoveCircle.zPosition = 6
+        numberFrame2.addChild(redMoveCircle)
+        print("added a redMoveCircle")
+        for i in 1...9 {
+
+            let tritext = SKLabelNode(text: String(i))
+            tritext.fontColor = UIColor.black
+            tritext.fontName = "AvenirNext-Bold"
+            tritext.fontSize = 64
+            tritext.horizontalAlignmentMode = .center
+            tritext.verticalAlignmentMode = .center
+            tritext.position = CGPoint(x: 80*(i-5), y: 0) // hardcoded for now
+            // tritext.position = CGPoint(x: framesize/(nSize*2), y: framesize/(nSize*2))
+            tritext.name = "numtext"+String(i)
+            tritext.zPosition = 5
+            numberFrame2.addChild(tritext)
+        }  //for i in 1...9
+        // self.addChild(numberFrame)
+        self.addChild(numberFrame2)
+//        var redCounter: SKShapeNode = //SKShapeNode(circleOfRadius: 50.0)
+      //  redCounter.fillColor = UIColor.red
+        //redCounter.name = "redcounter"
+
+    } // func makeNumbers()
     
-    func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
-    }
+    func makeCounters() {
+        // var redCounter: SKShapeNode = SKShapeNode(circleOfRadius: 50.0)
+        redCounter = SKShapeNode(circleOfRadius: cRad)
+        redCounter.fillColor = UIColor.red
+        redCounter.name = "redCounter"
+        redCounter.zPosition = 10
+        redCounter.position = CGPoint(x: 0, y: -450)
+        self.addChild(redCounter)
+        print("made a redCounter")
+        blueCounter = SKShapeNode(circleOfRadius: cRad)
+        blueCounter.fillColor = UIColor.blue
+        blueCounter.name = "blueCounter"
+        blueCounter.zPosition = 10
+        blueCounter.position = CGPoint(x: 100, y: -450)
+        self.addChild(blueCounter)
+        print("made a blueCounter")
+        // redCounter.fillColor = UIColor.red
+        // self.addChild(redCounter)
+    } //func makeCounters()
     
-    func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
-    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+
+        for touch in touches {
+            let location = touch.location(in: self)
+            let touchedNode = self.nodes(at: location)
+            for node in touchedNode {
+                if node.name == "redCounter" {
+                    print("found red counter")
+                    movingRed = true
+                    break
+                }
+                else if node.name == "blueCounter" {
+                    print("found blue counter")
+                    movingBlue = true
+                    break
+                }
+            }
         }
-        
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
-    }
+    } // func touchesBegan()
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-    }
-    
+        if (movingRed || movingBlue) {
+          // 2
+          let touch = touches.first
+          let touchLocation = touch!.location(in: self)
+          let previousLocation = touch!.previousLocation(in: self)
+          // 3
+            var nodeName = "redCounter"
+            var circleName = "//mover"
+            if movingBlue {
+                nodeName = "blueCounter"
+            }
+        
+          let redC = childNode(withName: nodeName) as! SKShapeNode
+          let moveC = childNode(withName: circleName) as! SKShapeNode
+          // let moveC: SKShapeNode = redMoveCircle
+            // let moveC = childNode(withName: "moveCircle")
+            // 4
+          // 6
+            var redY = redC.position.y + (touchLocation.y - previousLocation.y)
+            // 6
+          var redX = redC.position.x + (touchLocation.x - previousLocation.x)
+          var redCircleX = redMoveCircle.position.x + (touchLocation.x - previousLocation.x)
+            redC.position = CGPoint(x: redX, y: redY)
+            // print("redX is",redX)
+            // round to the nearest 80
+            let rounded: CGFloat = CGFloat(roundf(Float(redX/80)))
+            // redMoveCircle.position.x = CGFloat(Double(rounded) * 80.0)
+            redMoveCircle.position.x = CGFloat(rounded*80)
+        }
+        /* print("moving")
+        for touch in touches {
+            if movingRed {
+                print("red to")
+                print(touch.location(in: self))
+                redCounter.position = CGPoint(x: 0.0,y: 0.0)
+                // redCounter.position = touch.location(in: self)
+            }
+        }*/
+    } // func touchesMoved
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
+        print("touch ended")
+        movingRed = false
+        movingBlue = false
+    } // func touchesEnded
     
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-    }
 }
