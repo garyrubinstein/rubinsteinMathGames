@@ -128,7 +128,7 @@ class GameScene: SKScene {
         redMoveCircle.position = CGPoint(x: 80*(1-5), y: 0)
         redMoveCircle.zPosition = 6
         numberFrame2.addChild(redMoveCircle)
-        print("added a redMoveCircle")
+        print("added a redMoveCircle ")
         for i in 1...9 {
 
             let tritext = SKLabelNode(text: String(i))
@@ -139,6 +139,7 @@ class GameScene: SKScene {
             tritext.verticalAlignmentMode = .center
             tritext.position = CGPoint(x: 80*(i-5), y: 0) // hardcoded for now
             // tritext.position = CGPoint(x: framesize/(nSize*2), y: framesize/(nSize*2))
+            // changing
             tritext.name = "numtext"+String(i)
             tritext.zPosition = 10
             numberFrame2.addChild(tritext)
