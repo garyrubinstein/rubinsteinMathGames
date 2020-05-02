@@ -30,6 +30,7 @@ class GameScene: SKScene {
     var redCounter: SKShapeNode = SKShapeNode()
     var blueCounter: SKShapeNode = SKShapeNode()
     var redMoveCircle: SKShapeNode = SKShapeNode()
+    var blueMoveCircle: SKShapeNode = SKShapeNode()
 
     var movingRed: Bool = false
     var movingBlue: Bool = false
@@ -129,6 +130,15 @@ class GameScene: SKScene {
         redMoveCircle.zPosition = 6
         numberFrame2.addChild(redMoveCircle)
         print("added a redMoveCircle ")
+        blueMoveCircle = SKShapeNode(circleOfRadius: cRad)
+        blueMoveCircle.name = "mover2"
+        blueMoveCircle.strokeColor = UIColor.blue
+        blueMoveCircle.lineWidth = 10.0
+        blueMoveCircle.position = CGPoint(x: 80*(1-5), y: 0)
+        blueMoveCircle.zPosition = 6
+        numberFrame2.addChild(blueMoveCircle)
+        print("added a blueMoveCircle ")
+        
         for i in 1...9 {
 
             let tritext = SKLabelNode(text: String(i))
@@ -204,6 +214,7 @@ class GameScene: SKScene {
             var circleName = "//mover"
             if movingBlue {
                 nodeName = "blueCounter"
+                circleName = "//mover2"
             }
         
           let redC = childNode(withName: nodeName) as! SKShapeNode
@@ -216,12 +227,21 @@ class GameScene: SKScene {
             // 6
           var redX = redC.position.x + (touchLocation.x - previousLocation.x)
           var redCircleX = redMoveCircle.position.x + (touchLocation.x - previousLocation.x)
+            if movingBlue {
+              redCircleX = blueMoveCircle.position.x + (touchLocation.x - previousLocation.x)
+            }
             redC.position = CGPoint(x: redX, y: redY)
             // print("redX is",redX)
             // round to the nearest 80
             let rounded: CGFloat = CGFloat(roundf(Float(redX/80)))
             // redMoveCircle.position.x = CGFloat(Double(rounded) * 80.0)
-            redMoveCircle.position.x = CGFloat(rounded*80)
+            if movingRed {
+                redMoveCircle.position.x = CGFloat(rounded*80)
+            }
+            else if movingBlue {
+                blueMoveCircle.position.x = CGFloat(rounded*80)
+
+            }
         }
         /* print("moving")
         for touch in touches {
@@ -240,6 +260,7 @@ class GameScene: SKScene {
         var circleName = "//mover"
         if movingBlue {
             nodeName = "blueCounter"
+            circleName = "//mover2"
         }
         let redC = childNode(withName: nodeName) as! SKShapeNode
         let moveC = childNode(withName: circleName) as! SKShapeNode
