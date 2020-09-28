@@ -15,6 +15,9 @@ class GameScene: SKScene {
     var theSize: CGFloat = 0.0
     var nSize: Int = 6
     var board: [Int] = []
+    var numPositions: [CGFloat] = [0,0,0,0,0,0,0,0,0,0]
+    var numPositionsDict: Dictionary<Int, CGFloat> = [:]
+    var boardMapDict: Dictionary<Int, Int> = [:]
     var framesize: Int = 0
     var scalePieces: CGFloat = 1.4
     var theMode: Int = 0
@@ -34,6 +37,8 @@ class GameScene: SKScene {
 
     var movingRed: Bool = false
     var movingBlue: Bool = false
+    var redPos: Int = 0
+    var bluePos: Int = 0
 
     
     // private var label : SKLabelNode?
@@ -68,6 +73,7 @@ class GameScene: SKScene {
         self.addChild(myframe)
         for i in 0...(nSize*nSize-1) {
             // print(i)
+            boardMapDict.updateValue(i, forKey: numberList[i])
             board.append(Int(i+1))
             let row = Int(i/nSize)
             let column = i%nSize
@@ -147,7 +153,10 @@ class GameScene: SKScene {
             tritext.fontSize = 64
             tritext.horizontalAlignmentMode = .center
             tritext.verticalAlignmentMode = .center
-            tritext.position = CGPoint(x: 80*(i-5), y: 0) // hardcoded for now
+            var hpos : CGFloat = CGFloat(80*(i-5))
+            numPositions[i] = hpos
+            numPositionsDict.updateValue(hpos, forKey: i)
+            tritext.position = CGPoint(x: hpos, y: 0) // hardcoded for now
             // tritext.position = CGPoint(x: framesize/(nSize*2), y: framesize/(nSize*2))
             // changing
             tritext.name = "numtext"+String(i)
@@ -265,6 +274,26 @@ class GameScene: SKScene {
         let redC = childNode(withName: nodeName) as! SKShapeNode
         let moveC = childNode(withName: circleName) as! SKShapeNode
         redC.position.x = moveC.position.x
+        print(redC.position.x/80+5)
+        if (nodeName=="blueCounter") {
+            bluePos = Int(redC.position.x/80+5)
+        }
+        else {
+            redPos = Int(redC.position.x/80+5)
+        }
+        print("bluePos: "+String(bluePos))
+        print("redPos: "+String(redPos))
+        var product = bluePos * redPos
+        print("product "+String(product))
+        if let boardPos: Int = boardMapDict[product] {
+            print(boardPos)
+        }
+        else {
+            print("just started")
+        }
+        // var boardPos: Int = boardMapDict[product]!
+        // print(boardPos)
+        // print(boardMapDict.someKey(forValue: 64))
         redC.position.y = numFrameY
         movingRed = false
         movingBlue = false
