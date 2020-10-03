@@ -16,6 +16,7 @@ class GameScene: SKScene {
     var nSize: Int = 6
     var board: [Int] = []
     var numPositions: [CGFloat] = [0,0,0,0,0,0,0,0,0,0]
+    var boardState: [Int] = []
     var numPositionsDict: Dictionary<Int, CGFloat> = [:]
     var boardMapDict: Dictionary<Int, Int> = [:]
     var framesize: Int = 0
@@ -25,6 +26,7 @@ class GameScene: SKScene {
     var frameOffsetX: Int = 0
     var cRad: CGFloat = 35.0
     var numFrameY: CGFloat = -600.0
+    var startingXPostion: CGFloat = 0.0
     var squareColor: UIColor = UIColor(red: 0.8784, green: 0.8588, blue: 0.7098, alpha: 1.0)
     // var squareColor: UIColor = UIColor(red: 0.8392, green: 0.7961, blue: 0, alpha: 1.0) // UIColor.yellow
     var nodelist: [SKShapeNode] = []
@@ -77,6 +79,7 @@ class GameScene: SKScene {
             // print(i)
             boardMapDict.updateValue(i, forKey: numberList[i])
             board.append(Int(i+1))
+            boardState.append(0)
             let row = Int(i/nSize)
             let column = i%nSize
             var squareWidth: CGFloat = CGFloat(framesize/nSize)
@@ -204,10 +207,12 @@ class GameScene: SKScene {
                 if node.name == "redCounter" {
                     print("found red counter")
                     movingRed = true
+                    startingXPostion = node.position.x
                     break
                 }
                 else if node.name == "blueCounter" {
                     print("found blue counter")
+                    startingXPostion = node.position.x
                     movingBlue = true
                     break
                 }
@@ -291,7 +296,9 @@ class GameScene: SKScene {
         var tempBoardPos = -1
         if let boardPos: Int = boardMapDict[product] {
             print(boardPos)
-            tempBoardPos = boardPos
+            if (boardState[boardPos]==0) {
+                tempBoardPos = boardPos
+            }
         }
         else {
             print("just started")
@@ -306,12 +313,22 @@ class GameScene: SKScene {
         if (tempBoardPos > -1) {
             if (movesMade%2==0) {
                 gamePieceList[tempBoardPos].fillColor = UIColor.green
+                boardState[tempBoardPos]=1
             }
             else {
                 gamePieceList[tempBoardPos].fillColor = UIColor.red
+                boardState[tempBoardPos]=2
             }
         }
-        movesMade += 1
+        
+        if (tempBoardPos == -1 && product>0) {
+            redC.position.x = startingXPostion
+            moveC.position.x = startingXPostion
+        }
+        else {
+            movesMade += 1
+        }
+
         
     } // func touchesEnded
     
