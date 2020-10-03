@@ -30,6 +30,7 @@ class GameScene: SKScene {
     var nodelist: [SKShapeNode] = []
     var textnodelist: [SKLabelNode] = []
     var numberList: [Int] = []
+    var gamePieceList: [SKShapeNode] = []
     var redCounter: SKShapeNode = SKShapeNode()
     var blueCounter: SKShapeNode = SKShapeNode()
     var redMoveCircle: SKShapeNode = SKShapeNode()
@@ -39,6 +40,7 @@ class GameScene: SKScene {
     var movingBlue: Bool = false
     var redPos: Int = 0
     var bluePos: Int = 0
+    var movesMade: Int = 0
 
     
     // private var label : SKLabelNode?
@@ -81,7 +83,8 @@ class GameScene: SKScene {
             var squareHeight: CGFloat = CGFloat(framesize/nSize)
 
             let gamePiece = SKShapeNode(rect: CGRect(x: 0, y: 0, width: squareWidth, height: squareWidth))
-            gamePiece.name = "piece,"+String(i)
+            gamePiece.name = "piece"+String(i)
+            gamePieceList.append(gamePiece)
             gamePiece.fillColor = squareColor
 
             gamePiece.strokeColor = UIColor.black
@@ -285,8 +288,10 @@ class GameScene: SKScene {
         print("redPos: "+String(redPos))
         var product = bluePos * redPos
         print("product "+String(product))
+        var tempBoardPos = -1
         if let boardPos: Int = boardMapDict[product] {
             print(boardPos)
+            tempBoardPos = boardPos
         }
         else {
             print("just started")
@@ -297,6 +302,17 @@ class GameScene: SKScene {
         redC.position.y = numFrameY
         movingRed = false
         movingBlue = false
+        // update color of square
+        if (tempBoardPos > -1) {
+            if (movesMade%2==0) {
+                gamePieceList[tempBoardPos].fillColor = UIColor.green
+            }
+            else {
+                gamePieceList[tempBoardPos].fillColor = UIColor.red
+            }
+        }
+        movesMade += 1
+        
     } // func touchesEnded
     
 }
