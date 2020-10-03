@@ -327,9 +327,16 @@ class GameScene: SKScene {
         }
         else {
             movesMade += 1
+            print(boardState)
         }
 
         
     } // func touchesEnded
+    func checkRows() {
+        print("checking rows")
+    }
+    func checkDiagonals() {
+        print("checking diagonals")
+    }
     
 }
