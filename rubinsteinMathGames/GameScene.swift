@@ -328,15 +328,74 @@ class GameScene: SKScene {
         else {
             movesMade += 1
             print(boardState)
+            checkAll()
+            // print(getRepeats(numbers: [1,2,1,2,2,1]))
         }
 
         
     } // func touchesEnded
-    func checkRows() {
-        print("checking rows")
+
+    func checkAll()->Int {
+        var toCheck:[[Int]] = []
+        toCheck.append([0,1,2,3,4,5])
+        toCheck.append([6,7,8,9,10,11])
+        toCheck.append([12,13,14,15,16,17])
+        toCheck.append([18,19,20,21,22,23])
+        toCheck.append([24,25,26,27,28,29])
+        toCheck.append([30,31,32,33,34,35])
+        toCheck.append([0,6,12,18,24,30])
+        toCheck.append([1,7,13,19,25,31])
+        toCheck.append([2,8,14,20,26,32])
+        toCheck.append([3,9,15,21,27,33])
+        toCheck.append([4,10,16,22,28,34])
+        toCheck.append([5,11,17,23,29,35])
+        toCheck.append([12,19,26,33])
+        toCheck.append([6,13,20,27,34])
+        toCheck.append([0,7,14,21,28,35])
+        toCheck.append([1,8,15,22,29])
+        toCheck.append([2,9,16,23])
+        toCheck.append([3,8,13,18])
+        toCheck.append([4,9,14,19,24])
+        toCheck.append([5,10,15,20,25,30])
+        toCheck.append([11,16,21,26,31])
+        toCheck.append([17,22,27,32])
+        var winner: Int = 0
+        for i in toCheck {
+            var numList = getNums(numbers: i)
+            // print(numList)
+            winner = getRepeats(numbers: numList)
+            if (winner>0) {
+                print(String(winner)+" wins!")
+                return winner
+            }
+        }
+        return 0
     }
-    func checkDiagonals() {
-        print("checking diagonals")
+    func getNums(numbers: [Int])->[Int] {
+        var theNums: [Int] = []
+        for i in numbers {
+            theNums.append(boardState[i])
+        }
+        return theNums
     }
-    
+    func getRepeats(numbers: [Int])->Int {
+        // returns 0 if no 4 in a row
+        // returns 1 if 4 1s in a row
+        // returns 2 if 4 2s in a row
+        var count = 0
+        var n = -1
+        for i in numbers {
+            if (i != n) {
+                count = 1 // found a new number
+            }
+            else {
+                count += 1
+                if (count == 4) {
+                    return i
+                }
+            }
+            n = i
+        }
+        return 0
+    }
 }
