@@ -43,6 +43,8 @@ class GameScene: SKScene {
     var redPos: Int = 0
     var bluePos: Int = 0
     var movesMade: Int = 0
+    var justStarted: Bool = true
+    var gameOver: Bool = false
 
     
     // private var label : SKLabelNode?
@@ -296,6 +298,7 @@ class GameScene: SKScene {
         var tempBoardPos = -1
         if let boardPos: Int = boardMapDict[product] {
             print(boardPos)
+            justStarted = false
             if (boardState[boardPos]==0) {
                 tempBoardPos = boardPos
             }
@@ -328,13 +331,50 @@ class GameScene: SKScene {
         else {
             movesMade += 1
             print(boardState)
-            checkAll()
-            // print(getRepeats(numbers: [1,2,1,2,2,1]))
+            if (checkAll()>0) {
+                gameOver = true
+            }
+            if (!justStarted) {
+                var possibleMoves = checkDraw(blue: bluePos, red: redPos)
+                // print(getRepeats(numbers: [1,2,1,2,2,1]))
+                print("possible moves",possibleMoves)
+                if (possibleMoves == 0) {
+                    print("Draw!")
+                    gameOver == true
+                }
+            }
+            if (gameOver) {
+                redCounter.isHidden = true
+                blueCounter.isHidden = true
+                redMoveCircle.isHidden = true
+                blueMoveCircle.isHidden = true
+            }
         }
 
         
     } // func touchesEnded
 
+    func checkDraw(blue: Int, red: Int)->Int {
+        print("in checkDraw")
+        print(blue,red)
+        // returns 1 if it is a draw and a 0 if it isn't
+        var count: Int = 0
+        // will count how many legal moves are possible on the next turn
+        // if it is 0, the game is a draw
+        var i: Int = 1
+        while (i<10) {
+            print(boardState[boardMapDict[i*blue]!])
+            if (boardState[boardMapDict[i*blue]!]==0) {
+                count += 1
+            }
+            if (boardState[boardMapDict[i*red]!]==0) {
+                count += 1
+            }
+            i = i+1
+        }
+        return count
+    }
+    
     func checkAll()->Int {
         var toCheck:[[Int]] = []
         toCheck.append([0,1,2,3,4,5])
