@@ -45,6 +45,11 @@ class GameScene: SKScene {
     var movesMade: Int = 0
     var justStarted: Bool = true
     var gameOver: Bool = false
+    var messages: SKLabelNode = SKLabelNode()
+    // var messageBox: SKShapeNode = SKShapeNode()
+    var messageBox: SKSpriteNode = SKSpriteNode()
+    var messageBoxWidth: CGFloat = 300.0
+    var messageBoxHeight: CGFloat = 200.0
 
     
     // private var label : SKLabelNode?
@@ -72,6 +77,30 @@ class GameScene: SKScene {
             25, 27, 28, 30, 32, 35, 36, 40, 42, 45, 48, 49, 54, 56, 63, 64,
             72, 81]
         }
+        let mbx: CGFloat = 0.0
+        let mby: CGFloat = 525.0
+        messageBoxWidth = 750
+        messageBoxHeight = 1334/5
+        // messageBox.name = "bar"
+        messageBox.size = CGSize(width: messageBoxWidth, height: messageBoxHeight)
+        messageBox.color = SKColor.white
+        messageBox.position = CGPoint(x: mbx, y: mby)
+        // messageBox = SKShapeNode(rect: CGRect(x: mbx-messageBoxWidth/2, y: mby-messageBoxHeight/2, width: messageBoxWidth, height: messageBoxHeight))
+        
+        // messageBox.fillColor = UIColor.yellow
+        messageBox.zPosition = 10
+        messageBox.isHidden = false
+        // messages = SKLabelNode(text: "hi")
+        messages.text = "Hello there how are you?"
+        messages.fontColor = .black
+        messages.verticalAlignmentMode = .center
+        messages.fontSize = 29.0
+        messages.zPosition = 1
+        messages.position = CGPoint(x: 0, y: 0)
+        messages.zPosition = 10
+        messageBox.addChild(messages)
+        self.addChild(messageBox)
+        
         let myframe = SKShapeNode(rect: CGRect(x: -framesize/2-frameOffsetX, y: -framesize/2-frameOffset, width: framesize, height: framesize))
         myframe.fillColor = UIColor.red
         myframe.zPosition = 3 // this was 3
@@ -348,6 +377,7 @@ class GameScene: SKScene {
                 blueCounter.isHidden = true
                 redMoveCircle.isHidden = true
                 blueMoveCircle.isHidden = true
+                messageBox.isHidden = false
             }
         }
 
