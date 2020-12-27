@@ -83,7 +83,7 @@ class GameScene: SKScene {
         messageBoxHeight = 1334/5
         // messageBox.name = "bar"
         messageBox.size = CGSize(width: messageBoxWidth, height: messageBoxHeight)
-        messageBox.color = SKColor.white
+        messageBox.color = UIColor(red: 0.8784, green: 0.8588, blue: 0.7098, alpha: 1.0) //SKColor.white
         messageBox.position = CGPoint(x: mbx, y: mby)
         // messageBox = SKShapeNode(rect: CGRect(x: mbx-messageBoxWidth/2, y: mby-messageBoxHeight/2, width: messageBoxWidth, height: messageBoxHeight))
         
@@ -91,10 +91,12 @@ class GameScene: SKScene {
         messageBox.zPosition = 10
         messageBox.isHidden = false
         // messages = SKLabelNode(text: "hi")
-        messages.text = "Hello there how are you?"
+        messages.text = "Player 1\nMove both counters"
+        messages.numberOfLines = 2
+        messages.fontName="Optima-ExtraBlack"
         messages.fontColor = .black
         messages.verticalAlignmentMode = .center
-        messages.fontSize = 29.0
+        messages.fontSize = 48.0
         messages.zPosition = 1
         messages.position = CGPoint(x: 0, y: 0)
         messages.zPosition = 10
@@ -167,7 +169,7 @@ class GameScene: SKScene {
         // self.addChild(numberFrame)
         redMoveCircle = SKShapeNode(circleOfRadius: cRad)
         redMoveCircle.name = "mover"
-        redMoveCircle.strokeColor = UIColor.red
+        redMoveCircle.strokeColor = UIColor.blue
         redMoveCircle.lineWidth = 10.0
         redMoveCircle.position = CGPoint(x: 80*(1-5), y: 0)
         redMoveCircle.zPosition = 6
@@ -211,7 +213,7 @@ class GameScene: SKScene {
     func makeCounters() {
         // var redCounter: SKShapeNode = SKShapeNode(circleOfRadius: 50.0)
         redCounter = SKShapeNode(circleOfRadius: cRad)
-        redCounter.fillColor = UIColor.red
+        redCounter.fillColor = UIColor.blue
         redCounter.name = "redCounter"
         redCounter.zPosition = 10
         redCounter.position = CGPoint(x: 0, y: -450)
@@ -344,7 +346,7 @@ class GameScene: SKScene {
         // update color of square
         if (tempBoardPos > -1) {
             if (movesMade%2==0) {
-                gamePieceList[tempBoardPos].fillColor = UIColor.green
+                gamePieceList[tempBoardPos].fillColor = UIColor(red: 0.3765, green: 0.6471, blue: 0.2314, alpha: 1.0) //UIColor.green
                 boardState[tempBoardPos]=1
             }
             else {
@@ -359,12 +361,21 @@ class GameScene: SKScene {
         }
         else {
             movesMade += 1
+            if (movesMade%2 == 0) {
+                messages.text = "Player 2\nMove one of the counters"
+                messages.numberOfLines = 2
+            }
+            else if (movesMade>1){
+                messages.text = "Player 1\nMove one of the counters"
+                messages.numberOfLines = 2
+            }
             print(boardState)
             if (checkAll()>0) {
                 gameOver = true
             }
+            var possibleMoves = 36
             if (!justStarted) {
-                var possibleMoves = checkDraw(blue: bluePos, red: redPos)
+                possibleMoves = checkDraw(blue: bluePos, red: redPos)
                 // print(getRepeats(numbers: [1,2,1,2,2,1]))
                 print("possible moves",possibleMoves)
                 if (possibleMoves == 0) {
@@ -378,6 +389,21 @@ class GameScene: SKScene {
                 redMoveCircle.isHidden = true
                 blueMoveCircle.isHidden = true
                 messageBox.isHidden = false
+                if (possibleMoves == 0) {
+                    messages.text = "Draw"
+                }
+                else {
+                    messages.text = "Game Over"
+                    if (movesMade%2==0) {
+                        messages.text = "Game Over\nPlayer 1 wins!"
+                        messages.numberOfLines = 2
+                    }
+                    else {
+                        messages.text = "Game Over\nPlayer 2 wins!"
+                        messages.numberOfLines = 2
+                    }
+                }
+
             }
         }
 
@@ -436,6 +462,7 @@ class GameScene: SKScene {
             winner = getRepeats(numbers: numList)
             if (winner>0) {
                 print(String(winner)+" wins!")
+                messages.text = String(winner)+" wins!"
                 return winner
             }
         }
