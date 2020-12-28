@@ -32,6 +32,7 @@ class GameScene: SKScene {
     var nodelist: [SKShapeNode] = []
     var textnodelist: [SKLabelNode] = []
     var numberList: [Int] = []
+    var illegalMoveMessages: [String] = []
     var gamePieceList: [SKShapeNode] = []
     var startButton: SKShapeNode = SKShapeNode()
     var redCounter: SKShapeNode = SKShapeNode()
@@ -92,13 +93,13 @@ class GameScene: SKScene {
         messageBox.zPosition = 10
         messageBox.isHidden = false
         // messages = SKLabelNode(text: "hi")
-        messages.text = "Player 1\nMove both counters"
+        messages.text = "Instructions\nTry to get 4 in a row!"
         messages.numberOfLines = 2
         messages.fontName="Optima-ExtraBlack"
         messages.fontColor = .black
         messages.verticalAlignmentMode = .center
         messages.horizontalAlignmentMode = .center
-        messages.fontSize = 48.0
+        messages.fontSize = 24.0
         messages.zPosition = 1
         messages.position = CGPoint(x: 0, y: 0)
         messages.zPosition = 10
@@ -158,7 +159,29 @@ class GameScene: SKScene {
         makeCounters()
         makeNumbers()
         makeButton()
+        illegalMoveMessages.append("Illegal Move\nYou must move one of the counters")
+        illegalMoveMessages.append("Illegal Move\nThat product has alreaady been played")
+
     } // func initialize()
+    func resetGame() {
+        justStarted = true
+        movesMade = 0
+        messages.text = "Instructions\nTry to get 4 in a row!"
+        for i in 0...(35) {
+            boardState[i]=0
+            gamePieceList[i].fillColor = squareColor
+        }
+        started = false
+        movingRed = false
+        movingBlue = false
+        redPos = 0
+        bluePos = 0
+        movesMade = 0
+        justStarted = true
+        gameOver = false
+        redCounter.position = CGPoint(x: -50, y: -450)
+        blueCounter.position = CGPoint(x: 50, y: -450)
+    }
     
     func makeNumbers() {
         let numberFrame2 = SKSpriteNode(color: UIColor.clear, size: CGSize(width: screenWidth, height: 200))
@@ -267,6 +290,7 @@ class GameScene: SKScene {
                     // redMoveCircle.isHidden = false
                     // blueMoveCircle.isHidden = false
                     startButton.isHidden = true
+                    resetGame()
                 }
                 else if node.name == "redCounter" {
                     print("found red counter")
@@ -343,6 +367,8 @@ class GameScene: SKScene {
         print("touch ended")
         if (!started) {
             started = true
+            messages.fontSize = 48.0
+            messages.text = "Player 1\nMove both counters"
             return // break
         }
 
@@ -398,6 +424,7 @@ class GameScene: SKScene {
         if (tempBoardPos == -1 && product>0) {
             redC.position.x = startingXPostion
             moveC.position.x = startingXPostion
+            messages.text = "Illegal move\nreason here"
         }
         else {
             movesMade += 1
@@ -442,6 +469,13 @@ class GameScene: SKScene {
                         messages.text = "Game Over\nPlayer 2 wins!"
                         messages.numberOfLines = 2
                     }
+                    started = true
+                    startButton.isHidden = false
+                    redCounter.isHidden = true
+                    blueCounter.isHidden = true
+                    redMoveCircle.isHidden = true
+                    blueMoveCircle.isHidden = true
+                    justStarted = true
                 }
 
             }
