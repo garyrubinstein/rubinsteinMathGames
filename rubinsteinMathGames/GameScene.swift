@@ -33,11 +33,12 @@ class GameScene: SKScene {
     var textnodelist: [SKLabelNode] = []
     var numberList: [Int] = []
     var gamePieceList: [SKShapeNode] = []
+    var startButton: SKShapeNode = SKShapeNode()
     var redCounter: SKShapeNode = SKShapeNode()
     var blueCounter: SKShapeNode = SKShapeNode()
     var redMoveCircle: SKShapeNode = SKShapeNode()
     var blueMoveCircle: SKShapeNode = SKShapeNode()
-
+    var started: Bool = false
     var movingRed: Bool = false
     var movingBlue: Bool = false
     var redPos: Int = 0
@@ -96,6 +97,7 @@ class GameScene: SKScene {
         messages.fontName="Optima-ExtraBlack"
         messages.fontColor = .black
         messages.verticalAlignmentMode = .center
+        messages.horizontalAlignmentMode = .center
         messages.fontSize = 48.0
         messages.zPosition = 1
         messages.position = CGPoint(x: 0, y: 0)
@@ -155,6 +157,7 @@ class GameScene: SKScene {
         } // for i in 0...(nSize*nSize-1) {
         makeCounters()
         makeNumbers()
+        makeButton()
     } // func initialize()
     
     func makeNumbers() {
@@ -173,6 +176,7 @@ class GameScene: SKScene {
         redMoveCircle.lineWidth = 10.0
         redMoveCircle.position = CGPoint(x: 80*(1-5), y: 0)
         redMoveCircle.zPosition = 6
+        redMoveCircle.isHidden = true
         numberFrame2.addChild(redMoveCircle)
         print("added a redMoveCircle ")
         blueMoveCircle = SKShapeNode(circleOfRadius: cRad)
@@ -181,6 +185,7 @@ class GameScene: SKScene {
         blueMoveCircle.lineWidth = 10.0
         blueMoveCircle.position = CGPoint(x: 80*(1-5), y: 0)
         blueMoveCircle.zPosition = 6
+        blueMoveCircle.isHidden = true
         numberFrame2.addChild(blueMoveCircle)
         print("added a blueMoveCircle ")
         
@@ -216,19 +221,37 @@ class GameScene: SKScene {
         redCounter.fillColor = UIColor.blue
         redCounter.name = "redCounter"
         redCounter.zPosition = 10
-        redCounter.position = CGPoint(x: 0, y: -450)
+        redCounter.position = CGPoint(x: -50, y: -450)
+        redCounter.isHidden = true
         self.addChild(redCounter)
         print("made a redCounter")
         blueCounter = SKShapeNode(circleOfRadius: cRad)
         blueCounter.fillColor = UIColor.blue
         blueCounter.name = "blueCounter"
         blueCounter.zPosition = 10
-        blueCounter.position = CGPoint(x: 100, y: -450)
+        blueCounter.position = CGPoint(x: 50, y: -450)
+        blueCounter.isHidden = true
         self.addChild(blueCounter)
         print("made a blueCounter")
         // redCounter.fillColor = UIColor.red
         // self.addChild(redCounter)
     } //func makeCounters()
+    
+    func makeButton() {
+        var buttonWidth: CGFloat = 400.0
+        var buttonHeight: CGFloat = 150.0
+        startButton = SKShapeNode(rect: CGRect(x: -buttonWidth/2, y: -450-buttonHeight/2, width: buttonWidth, height: buttonHeight))
+        startButton.fillColor = UIColor.red
+        startButton.name = "startButton"
+        startButton.zPosition = 5
+        var startLabel: SKLabelNode = SKLabelNode()
+        startLabel.text = "Start"
+        startLabel.zPosition = 10
+        startButton.addChild(startLabel)
+        // redCounter.position = CGPoint(x: 0, y: -450)
+        self.addChild(startButton)
+        // print("made a redCounter")
+    }
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -237,7 +260,15 @@ class GameScene: SKScene {
             let location = touch.location(in: self)
             let touchedNode = self.nodes(at: location)
             for node in touchedNode {
-                if node.name == "redCounter" {
+                if node.name == "startButton" {
+                    print("start button")
+                    redCounter.isHidden = false
+                    blueCounter.isHidden = false
+                    // redMoveCircle.isHidden = false
+                    // blueMoveCircle.isHidden = false
+                    startButton.isHidden = true
+                }
+                else if node.name == "redCounter" {
                     print("found red counter")
                     movingRed = true
                     startingXPostion = node.position.x
@@ -256,6 +287,7 @@ class GameScene: SKScene {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if (movingRed || movingBlue) {
           // 2
+        
           let touch = touches.first
           let touchLocation = touch!.location(in: self)
           let previousLocation = touch!.previousLocation(in: self)
@@ -265,6 +297,10 @@ class GameScene: SKScene {
             if movingBlue {
                 nodeName = "blueCounter"
                 circleName = "//mover2"
+                blueMoveCircle.isHidden = false
+            }
+            else {
+                redMoveCircle.isHidden = false
             }
         
           let redC = childNode(withName: nodeName) as! SKShapeNode
@@ -305,6 +341,10 @@ class GameScene: SKScene {
     } // func touchesMoved
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("touch ended")
+        if (!started) {
+            started = true
+            return // break
+        }
 
         var nodeName = "redCounter"
         var circleName = "//mover"
