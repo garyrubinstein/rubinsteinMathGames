@@ -382,6 +382,8 @@ class GameScene: SKScene {
         let moveC = childNode(withName: circleName) as! SKShapeNode
         redC.position.x = moveC.position.x
         print(redC.position.x/80+5)
+        var oldBluePos = bluePos
+        var oldRedPos = redPos
         if (nodeName=="blueCounter") {
             bluePos = Int(redC.position.x/80+5)
         }
@@ -424,6 +426,8 @@ class GameScene: SKScene {
         if (tempBoardPos == -1 && product>0) {
             redC.position.x = startingXPostion
             moveC.position.x = startingXPostion
+            bluePos = oldBluePos
+            redPos = oldRedPos
             messages.text = "Illegal move\nreason here"
         }
         else {
@@ -436,7 +440,7 @@ class GameScene: SKScene {
                 messages.text = "Player 1\nMove one of the counters"
                 messages.numberOfLines = 2
             }
-            print(boardState)
+            // print(boardState)
             if (checkAll()>0) {
                 gameOver = true
             }
@@ -493,7 +497,7 @@ class GameScene: SKScene {
         // if it is 0, the game is a draw
         var i: Int = 1
         while (i<10) {
-            print(boardState[boardMapDict[i*blue]!])
+            // print(boardState[boardMapDict[i*blue]!])
             if (boardState[boardMapDict[i*blue]!]==0) {
                 count += 1
             }
