@@ -21,6 +21,7 @@ class GameScene: SKScene {
     var numPositionsDict: Dictionary<Int, CGFloat> = [:]
     var boardMapDict: Dictionary<Int, Int> = [:]
     var framesize: Int = 0
+    var darkGreen: UIColor = UIColor(red: 0.3765, green: 0.6471, blue: 0.2314, alpha: 1.0)
     var scalePieces: CGFloat = 1.4
     var theMode: Int = 0
     var frameOffset: Int = 0
@@ -284,7 +285,7 @@ class GameScene: SKScene {
         self.addChild(startButton)
         // print("made a redCounter")
         submitButton = SKShapeNode(rect: CGRect(x: -buttonWidth/2, y: -450-buttonHeight/2, width: buttonWidth, height: buttonHeight))
-        submitButton.fillColor = UIColor.green
+        submitButton.fillColor = darkGreen
         submitButton.name = "submitButton"
         submitButton.zPosition = 5
         // var startLabel: SKLabelNode = SKLabelNode()
@@ -403,6 +404,7 @@ class GameScene: SKScene {
         if (!started) {
             started = true
             messages.fontSize = 48.0
+            messages.fontColor = UIColor.red
             messages.text = "Player 1\nMove both counters"
             return // break
         }
@@ -473,10 +475,12 @@ class GameScene: SKScene {
         else {
             movesMade += 1
             if (movesMade%2 == 0) {
+                messages.fontColor = darkGreen
                 messages.text = "Player 2\nMove one of the counters"
                 messages.numberOfLines = 2
             }
             else if (movesMade>1){
+                messages.fontColor = UIColor.red
                 messages.text = "Player 1\nMove one of the counters"
                 messages.numberOfLines = 2
             }
@@ -501,15 +505,19 @@ class GameScene: SKScene {
                 blueMoveCircle.isHidden = true
                 messageBox.isHidden = false
                 if (possibleMoves == 0) {
+                    messages.fontColor = UIColor.black
                     messages.text = "Draw"
                 }
                 else {
+                    messages.fontColor = UIColor.black
                     messages.text = "Game Over"
                     if (movesMade%2==0) {
+                        messages.fontColor = UIColor.red
                         messages.text = "Game Over\nPlayer 1 wins!"
                         messages.numberOfLines = 2
                     }
                     else {
+                        messages.fontColor = darkGreen
                         messages.text = "Game Over\nPlayer 2 wins!"
                         messages.numberOfLines = 2
                     }
