@@ -17,10 +17,12 @@ class GameScene: SKScene {
     var nSize: Int = 6
     var board: [Int] = []
     var numPositions: [CGFloat] = [0,0,0,0,0,0,0,0,0,0]
+    var tempBoardPos: Int = -1
     var boardState: [Int] = []
     var numPositionsDict: Dictionary<Int, CGFloat> = [:]
     var boardMapDict: Dictionary<Int, Int> = [:]
     var framesize: Int = 0
+    var waitingForSubmit: Bool = false
     var darkGreen: UIColor = UIColor(red: 0.3765, green: 0.6471, blue: 0.2314, alpha: 1.0)
     var scalePieces: CGFloat = 1.4
     var theMode: Int = 0
@@ -29,6 +31,8 @@ class GameScene: SKScene {
     var cRad: CGFloat = 35.0
     var numFrameY: CGFloat = -600.0
     var startingXPostion: CGFloat = 0.0
+    var startingXPostionRed: CGFloat = 0.0
+    var startingXPostionBlue: CGFloat = 0.0
     var squareColor: UIColor = UIColor(red: 0.8784, green: 0.8588, blue: 0.7098, alpha: 1.0)
     // var squareColor: UIColor = UIColor(red: 0.8392, green: 0.7961, blue: 0, alpha: 1.0) // UIColor.yellow
     var nodelist: [SKShapeNode] = []
@@ -40,6 +44,8 @@ class GameScene: SKScene {
     var startButtonLabel: SKLabelNode = SKLabelNode()
     var submitButton: SKShapeNode = SKShapeNode()
     var submitButtonLabel: SKLabelNode = SKLabelNode()
+    var cancelButton: SKShapeNode = SKShapeNode()
+    var cancelButtonLabel: SKLabelNode = SKLabelNode()
     var redCounter: SKShapeNode = SKShapeNode()
     var blueCounter: SKShapeNode = SKShapeNode()
     var redMoveCircle: SKShapeNode = SKShapeNode()
@@ -48,8 +54,14 @@ class GameScene: SKScene {
     var movingRed: Bool = false
     var movingBlue: Bool = false
     var touchNothing: Bool = true
+    var submitPressed: Bool = false
+    var startPressed: Bool = false
+    var cancelPressed: Bool = false
     var redPos: Int = 0
+    var obp: Int = 0 // old blue position
+    var orp: Int = 0 // old red position
     var bluePos: Int = 0
+    var redJustMoved: Bool = false
     var movesMade: Int = 0
     var justStarted: Bool = true
     var submitted: Bool = false
@@ -248,7 +260,7 @@ class GameScene: SKScene {
     func makeCounters() {
         // var redCounter: SKShapeNode = SKShapeNode(circleOfRadius: 50.0)
         redCounter = SKShapeNode(circleOfRadius: cRad)
-        redCounter.fillColor = UIColor.blue
+        redCounter.fillColor = UIColor.red
         redCounter.name = "redCounter"
         redCounter.zPosition = 10
         redCounter.position = CGPoint(x: -50, y: -450)
@@ -268,7 +280,7 @@ class GameScene: SKScene {
     } //func makeCounters()
     
     func makeButton() {
-        var buttonWidth: CGFloat = 400.0
+        var buttonWidth: CGFloat = 250.0
         var buttonHeight: CGFloat = 150.0
         startButton = SKShapeNode(rect: CGRect(x: -buttonWidth/2, y: -450-buttonHeight/2, width: buttonWidth, height: buttonHeight))
         startButton.fillColor = UIColor.red
@@ -284,7 +296,8 @@ class GameScene: SKScene {
         // redCounter.position = CGPoint(x: 0, y: -450)
         self.addChild(startButton)
         // print("made a redCounter")
-        submitButton = SKShapeNode(rect: CGRect(x: -buttonWidth/2, y: -450-buttonHeight/2, width: buttonWidth, height: buttonHeight))
+        var offset: CGFloat = 150.0
+        submitButton = SKShapeNode(rect: CGRect(x: -buttonWidth/2-offset, y: -450-buttonHeight/2, width: buttonWidth, height: buttonHeight))
         submitButton.fillColor = darkGreen
         submitButton.name = "submitButton"
         submitButton.zPosition = 5
@@ -293,10 +306,24 @@ class GameScene: SKScene {
         submitButtonLabel.fontName="Optima-ExtraBlack"
         submitButtonLabel.fontSize = 48
         submitButtonLabel.zPosition = 10
-        submitButtonLabel.position = CGPoint(x: 0, y: -450)
+        submitButtonLabel.position = CGPoint(x: -offset, y: -450)
         submitButton.addChild(submitButtonLabel)
         submitButton.isHidden = true
         self.addChild(submitButton)
+        
+        cancelButton = SKShapeNode(rect: CGRect(x: -buttonWidth/2+offset, y: -450-buttonHeight/2, width: buttonWidth, height: buttonHeight))
+        cancelButton.fillColor = UIColor.red
+        cancelButton.name = "cancelButton"
+        cancelButton.zPosition = 5
+        // var startLabel: SKLabelNode = SKLabelNode()
+        cancelButtonLabel.text = "Cancel"
+        cancelButtonLabel.fontName="Optima-ExtraBlack"
+        cancelButtonLabel.fontSize = 48
+        cancelButtonLabel.zPosition = 10
+        cancelButtonLabel.position = CGPoint(x: offset, y: -450)
+        cancelButton.addChild(cancelButtonLabel)
+        cancelButton.isHidden = true
+        self.addChild(cancelButton)
     }
     
     
@@ -311,28 +338,57 @@ class GameScene: SKScene {
                 print(node.name)
                 if node.name == "startButton" {
                     print("start button")
+                    startPressed = true
                     touchNothing = false
                     redCounter.isHidden = false
                     blueCounter.isHidden = false
                     // redMoveCircle.isHidden = false
                     // blueMoveCircle.isHidden = false
                     startButton.isHidden = true
-                    submitButton.isHidden = false
+                    submitButton.isHidden = true
+                    cancelButton.isHidden = true
                     // startButtonLabel.text = "
                     resetGame()
                 }
                 else if node.name == "redCounter" {
+                    redJustMoved = true
                     touchNothing = false
                     print("found red counter")
                     movingRed = true
                     startingXPostion = node.position.x
+                    startingXPostionRed = node.position.x
                     break
                 }
                 else if node.name == "blueCounter" {
                     print("found blue counter")
+                    redJustMoved = false
                     touchNothing = false
                     startingXPostion = node.position.x
+                    startingXPostionBlue = node.position.x
                     movingBlue = true
+                    break
+                }
+                else if node.name == "submitButton" {
+                    print("found submit button")
+                    touchNothing = true
+                    submitPressed = true
+                    makeMove(tempBoardPos: tempBoardPos)
+                    // startingXPostion = node.position.x
+                    // movingBlue = true
+                    break
+                }
+                else if node.name == "cancelButton" {
+                    print("found cancel button")
+                    touchNothing = false
+                    cancelPressed = true
+                    cancelMove()
+                    // bluePos = obp
+                    // redPos = orp
+                    
+                    // submitPressed = true
+                    // makeMove(tempBoardPos: tempBoardPos)
+                    // startingXPostion = node.position.x
+                    // movingBlue = true
                     break
                 }
                 else {
@@ -343,6 +399,9 @@ class GameScene: SKScene {
     } // func touchesBegan()
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if (submitButton.isHidden==false) {
+            return
+        }
         if (movingRed || movingBlue) {
           // 2
         
@@ -401,6 +460,10 @@ class GameScene: SKScene {
         print("touch ended")
         print("touchNothing")
         print(touchNothing)
+        if (cancelPressed) {
+            cancelPressed = false
+            return
+        }
         if (!started) {
             started = true
             messages.fontSize = 48.0
@@ -424,17 +487,19 @@ class GameScene: SKScene {
         print(redC.position.x/80+5)
         var oldBluePos = bluePos
         var oldRedPos = redPos
+        obp = oldBluePos
+        orp = oldRedPos
         if (nodeName=="blueCounter") {
             bluePos = Int(redC.position.x/80+5)
         }
-        else {
+        else if (nodeName=="redCounter"){
             redPos = Int(redC.position.x/80+5)
         }
         print("bluePos: "+String(bluePos))
         print("redPos: "+String(redPos))
         var product = bluePos * redPos
         print("product "+String(product))
-        var tempBoardPos = -1
+        tempBoardPos = -1
         if let boardPos: Int = boardMapDict[product] {
             print(boardPos)
             justStarted = false
@@ -453,7 +518,9 @@ class GameScene: SKScene {
         movingBlue = false
         // update color of square
         if (tempBoardPos > -1) {
-            makeMove(tempBoardPos: tempBoardPos)
+            submitButton.isHidden = false
+            cancelButton.isHidden = false
+            // makeMove(tempBoardPos: tempBoardPos)
             /* if (movesMade%2==0) {
                 gamePieceList[tempBoardPos].fillColor = UIColor(red: 0.3765, green: 0.6471, blue: 0.2314, alpha: 1.0) //UIColor.green
                 boardState[tempBoardPos]=1
@@ -465,14 +532,24 @@ class GameScene: SKScene {
             */
         }
         
-        if (tempBoardPos == -1 && product>0) {
+        if ((tempBoardPos == -1 && product>0)) {
             redC.position.x = startingXPostion
             moveC.position.x = startingXPostion
             bluePos = oldBluePos
             redPos = oldRedPos
-            messages.text = "Illegal move\nThat space is taken.  Try again."
+            if (cancelPressed) {
+                messages.text="Cancelled"
+            }
+            else {
+                messages.text = "Illegal move\nThat space is taken.  Try again."
+            }
+            submitButton.isHidden = true
+            cancelButton.isHidden = true
+            // cancelPressed = false
         }
-        else {
+        else if (submitPressed || startPressed) {
+            submitPressed = false
+            startPressed = false
             movesMade += 1
             if (movesMade%2 == 0) {
                 messages.fontColor = darkGreen
@@ -524,6 +601,7 @@ class GameScene: SKScene {
                     started = true
                     startButton.isHidden = false
                     submitButton.isHidden = true
+                    cancelButton.isHidden = true
                     redCounter.isHidden = true
                     blueCounter.isHidden = true
                     redMoveCircle.isHidden = true
@@ -546,6 +624,44 @@ class GameScene: SKScene {
             gamePieceList[tempBoardPos].fillColor = UIColor.red
             boardState[tempBoardPos]=2
         }
+        submitButton.isHidden = true
+        cancelButton.isHidden = true
+    }
+    
+    func numToXPos(n: Int)->CGFloat {
+        print("ntx"+String(n))
+        return (CGFloat(n)-5.0)*80.0
+    }
+    func cancelMove() {
+        print("in cancelMove")
+        print("current bluePos: "+String(bluePos))
+        print("current redPos: "+String(redPos))
+        print("old bluePos: "+String(obp))
+        print("old redPos: "+String(orp))
+        let redC = childNode(withName: "redCounter") as! SKShapeNode
+        let blueC = childNode(withName: "blueCounter") as! SKShapeNode
+        let moveC = childNode(withName: "//mover") as! SKShapeNode
+        let moveC2 = childNode(withName: "//mover2") as! SKShapeNode
+        redC.position.x = numToXPos(n: orp)
+        moveC.position.x = numToXPos(n: orp)
+        blueC.position.x = numToXPos(n: obp)
+        moveC2.position.x = numToXPos(n: obp)
+        bluePos = obp
+        redPos = orp
+        cancelButton.isHidden = true
+        submitButton.isHidden = true
+        // redC.position.x = moveC.position.x
+        // print(redC.position.x/80+5)
+        // var oldBluePos = bluePos
+        // var oldRedPos = redPos
+        // obp = oldBluePos
+        // orp = oldRedPos
+
+            // bluePos = Int(blueC.position.x/80+5)
+        
+        
+            // redPos = Int(redC.position.x/80+5)
+
     }
 
     func checkDraw(blue: Int, red: Int)->Int {
