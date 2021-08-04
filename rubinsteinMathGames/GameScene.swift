@@ -375,6 +375,23 @@ class GameScene: SKScene {
                     makeMove(tempBoardPos: tempBoardPos)
                     // startingXPostion = node.position.x
                     // movingBlue = true
+                    // if (submitPressed || startPressed) {
+                        submitPressed = false
+                        startPressed = false
+                        movesMade += 1
+                        if (movesMade%2 == 0) {
+                            messages.fontColor = darkGreen
+                            messages.text = "Player 2\nMove one of the counters"
+                            messages.numberOfLines = 2
+                        }
+                        else if (movesMade>1){
+                            messages.fontColor = UIColor.red
+                            messages.text = "Player 1\nMove one of the counters"
+                            messages.numberOfLines = 2
+                        }
+                    
+                    
+                    
                     break
                 }
                 else if node.name == "cancelButton" {
@@ -547,7 +564,8 @@ class GameScene: SKScene {
             cancelButton.isHidden = true
             // cancelPressed = false
         }
-        else if (submitPressed || startPressed) {
+        if (submitPressed || startPressed) {
+            /*
             submitPressed = false
             startPressed = false
             movesMade += 1
@@ -561,6 +579,7 @@ class GameScene: SKScene {
                 messages.text = "Player 1\nMove one of the counters"
                 messages.numberOfLines = 2
             }
+            */
             // print(boardState)
             if (checkAll()>0) {
                 gameOver = true
