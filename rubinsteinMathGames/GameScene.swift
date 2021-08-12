@@ -373,6 +373,7 @@ class GameScene: SKScene {
                     touchNothing = true
                     submitPressed = true
                     makeMove(tempBoardPos: tempBoardPos)
+                    checkGameOver()
                     // startingXPostion = node.position.x
                     // movingBlue = true
                     // if (submitPressed || startPressed) {
@@ -581,6 +582,8 @@ class GameScene: SKScene {
             }
             */
             // print(boardState)
+            print("checkall")
+            print(checkAll())
             if (checkAll()>0) {
                 gameOver = true
             }
@@ -653,6 +656,10 @@ class GameScene: SKScene {
     }
     func cancelMove() {
         print("in cancelMove")
+        if (movesMade==0) {
+            obp=bluePos
+            orp=redPos
+        }
         print("current bluePos: "+String(bluePos))
         print("current redPos: "+String(redPos))
         print("old bluePos: "+String(obp))
@@ -682,7 +689,60 @@ class GameScene: SKScene {
             // redPos = Int(redC.position.x/80+5)
 
     }
+    func checkGameOver()->Bool {
+        // print(boardState)
+        print("checkall")
+        print(checkAll())
+        if (checkAll()>0) {
+            gameOver = true
+        }
+        var possibleMoves = 36
+        if (!justStarted) {
+            possibleMoves = checkDraw(blue: bluePos, red: redPos)
+            // print(getRepeats(numbers: [1,2,1,2,2,1]))
+            print("possible moves",possibleMoves)
+            if (possibleMoves == 0) {
+                print("Draw!")
+                gameOver == true
+            }
+        }
+        if (gameOver) {
+            redCounter.isHidden = true
+            blueCounter.isHidden = true
+            redMoveCircle.isHidden = true
+            blueMoveCircle.isHidden = true
+            messageBox.isHidden = false
+            if (possibleMoves == 0) {
+                messages.fontColor = UIColor.black
+                messages.text = "Draw"
+            }
+            else {
+                messages.fontColor = UIColor.black
+                messages.text = "Game Over"
+                if (movesMade%2==0) {
+                    messages.fontColor = UIColor.red
+                    messages.text = "Game Over\nPlayer 1 wins!"
+                    messages.numberOfLines = 2
+                }
+                else {
+                    messages.fontColor = darkGreen
+                    messages.text = "Game Over\nPlayer 2 wins!"
+                    messages.numberOfLines = 2
+                }
+                started = true
+                startButton.isHidden = false
+                submitButton.isHidden = true
+                cancelButton.isHidden = true
+                redCounter.isHidden = true
+                blueCounter.isHidden = true
+                redMoveCircle.isHidden = true
+                blueMoveCircle.isHidden = true
+                justStarted = true
+            }
 
+        }
+        return true
+    }
     func checkDraw(blue: Int, red: Int)->Int {
         print("in checkDraw")
         print(blue,red)
