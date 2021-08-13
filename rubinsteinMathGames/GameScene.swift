@@ -373,7 +373,9 @@ class GameScene: SKScene {
                     touchNothing = true
                     submitPressed = true
                     makeMove(tempBoardPos: tempBoardPos)
-                    checkGameOver()
+                    if (checkGameOver()) {
+                        return
+                    }
                     // startingXPostion = node.position.x
                     // movingBlue = true
                     // if (submitPressed || startPressed) {
@@ -720,12 +722,12 @@ class GameScene: SKScene {
                 messages.fontColor = UIColor.black
                 messages.text = "Game Over"
                 if (movesMade%2==0) {
-                    messages.fontColor = UIColor.red
+                    messages.fontColor = darkGreen
                     messages.text = "Game Over\nPlayer 1 wins!"
                     messages.numberOfLines = 2
                 }
                 else {
-                    messages.fontColor = darkGreen
+                    messages.fontColor = UIColor.red
                     messages.text = "Game Over\nPlayer 2 wins!"
                     messages.numberOfLines = 2
                 }
@@ -741,7 +743,7 @@ class GameScene: SKScene {
             }
 
         }
-        return true
+        return gameOver
     }
     func checkDraw(blue: Int, red: Int)->Int {
         print("in checkDraw")
