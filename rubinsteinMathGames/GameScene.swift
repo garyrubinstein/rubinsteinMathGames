@@ -382,13 +382,13 @@ class GameScene: SKScene {
                         submitPressed = false
                         startPressed = false
                         movesMade += 1
-                        if (movesMade%2 == 0) {
-                            messages.fontColor = darkGreen
+                        if (movesMade%2 == 1) {
+                            messages.fontColor = UIColor.red
                             messages.text = "Player 2\nMove one of the counters"
                             messages.numberOfLines = 2
                         }
                         else if (movesMade>1){
-                            messages.fontColor = UIColor.red
+                            messages.fontColor = darkGreen
                             messages.text = "Player 1\nMove one of the counters"
                             messages.numberOfLines = 2
                         }
@@ -487,7 +487,7 @@ class GameScene: SKScene {
         if (!started) {
             started = true
             messages.fontSize = 48.0
-            messages.fontColor = UIColor.red
+            messages.fontColor = darkGreen
             messages.text = "Player 1\nMove both counters"
             return // break
         }
