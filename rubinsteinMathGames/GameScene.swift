@@ -42,6 +42,7 @@ class GameScene: SKScene {
     var numberList: [Int] = []
     var illegalMoveMessages: [String] = []
     var gamePieceList: [SKShapeNode] = []
+    var currentColor: UIColor = UIColor.black
     var startButton: SKShapeNode = SKShapeNode()
     var startButtonLabel: SKLabelNode = SKLabelNode()
     var resetButton: SKShapeNode = SKShapeNode()
@@ -205,6 +206,9 @@ class GameScene: SKScene {
         redCounter.position = CGPoint(x: -50, y: -450)
         blueCounter.position = CGPoint(x: 50, y: -450)
         resetButton.isHidden = true
+        redMoveCircle.isHidden = true
+        blueMoveCircle.isHidden = true
+        
     }
     
     func makeNumbers() {
@@ -376,8 +380,8 @@ class GameScene: SKScene {
                     // resetButton.isHidden = false
                     // startButtonLabel.text = "
                     resetGame()
-                    resetButton.isHidden = false
-                    resetButtonLabel.isHidden = false
+                    resetButton.isHidden = true
+                    resetButtonLabel.isHidden = true
                 }
                 else if node.name == "redCounter" {
                     redJustMoved = true
@@ -404,9 +408,11 @@ class GameScene: SKScene {
                         cancelButton.isHidden = true
                         submitButton.isHidden = true
                         resetPressed = false
+                        resetGame()
                         return
                     }
                     resetButton.isHidden = false
+                    resetButtonLabel.isHidden = false
                     submitPressed = true
                     makeMove(tempBoardPos: tempBoardPos)
                     if (checkGameOver()) {
@@ -441,6 +447,8 @@ class GameScene: SKScene {
                         cancelButton.isHidden = true
                         submitButton.isHidden = true
                         resetPressed = false
+                        messages.text = currentText
+                        messages.fontColor = currentColor
                         return
                     }
                     resetButton.isHidden = false
@@ -460,6 +468,7 @@ class GameScene: SKScene {
                     resetPressed = true
                     submitButton.isHidden = false
                     cancelButton.isHidden = false
+                    currentColor = messages.fontColor!
                     messages.fontColor = UIColor.black
                     currentText = messages.text!
                     messages.text = "Are you sure you want\nto start a new game?"
