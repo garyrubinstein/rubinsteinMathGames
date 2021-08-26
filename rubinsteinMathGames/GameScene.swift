@@ -16,6 +16,7 @@ class GameScene: SKScene {
     var tilesPlaced: Int = 0 // for beginning of game want to know when it becomes 2 so the submit button can be displayed
     var nSize: Int = 6
     var board: [Int] = []
+    var currentText: String = ""
     var numPositions: [CGFloat] = [0,0,0,0,0,0,0,0,0,0]
     var tempBoardPos: Int = -1
     var boardState: [Int] = []
@@ -28,6 +29,7 @@ class GameScene: SKScene {
     var theMode: Int = 0
     var frameOffset: Int = 0
     var frameOffsetX: Int = 0
+    var resetPressed: Bool = false
     var cRad: CGFloat = 35.0
     var numFrameY: CGFloat = -600.0
     var startingXPostion: CGFloat = 0.0
@@ -42,6 +44,8 @@ class GameScene: SKScene {
     var gamePieceList: [SKShapeNode] = []
     var startButton: SKShapeNode = SKShapeNode()
     var startButtonLabel: SKLabelNode = SKLabelNode()
+    var resetButton: SKShapeNode = SKShapeNode()
+    var resetButtonLabel: SKLabelNode = SKLabelNode()
     var submitButton: SKShapeNode = SKShapeNode()
     var submitButtonLabel: SKLabelNode = SKLabelNode()
     var cancelButton: SKShapeNode = SKShapeNode()
@@ -200,6 +204,7 @@ class GameScene: SKScene {
         gameOver = false
         redCounter.position = CGPoint(x: -50, y: -450)
         blueCounter.position = CGPoint(x: 50, y: -450)
+        resetButton.isHidden = true
     }
     
     func makeNumbers() {
@@ -324,8 +329,28 @@ class GameScene: SKScene {
         cancelButton.addChild(cancelButtonLabel)
         cancelButton.isHidden = true
         self.addChild(cancelButton)
+        
+        resetButton = SKShapeNode(circleOfRadius: 60.0)    //(rect: CGRect(x: -buttonWidth/2+offset, y: -450-buttonHeight/2, width: buttonWidth, height: buttonHeight))
+        resetButton.position.x = 300.0
+        resetButton.position.y = 600.0
+        resetButton.fillColor = UIColor.red
+        resetButton.name = "resetButton"
+        resetButton.zPosition = 10
+        // var startLabel: SKLabelNode = SKLabelNode()
+        
+        resetButtonLabel.fontName="Optima-ExtraBlack"
+        resetButtonLabel.fontSize = 32
+        resetButtonLabel.zPosition = 15
+        resetButtonLabel.fontColor = UIColor.white
+        resetButtonLabel.text = "reset"
+        resetButtonLabel.isHidden = true
+        resetButtonLabel.position = CGPoint(x: 0.0, y: 0.0)
+        resetButton.addChild(resetButtonLabel)
+        resetButton.isHidden = true
+        self.addChild(resetButton)
     }
     
+
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 
@@ -338,6 +363,7 @@ class GameScene: SKScene {
                 print(node.name)
                 if node.name == "startButton" {
                     print("start button")
+                    // resetButton.isHidden = false
                     startPressed = true
                     touchNothing = false
                     redCounter.isHidden = false
@@ -347,8 +373,11 @@ class GameScene: SKScene {
                     startButton.isHidden = true
                     submitButton.isHidden = true
                     cancelButton.isHidden = true
+                    // resetButton.isHidden = false
                     // startButtonLabel.text = "
                     resetGame()
+                    resetButton.isHidden = false
+                    resetButtonLabel.isHidden = false
                 }
                 else if node.name == "redCounter" {
                     redJustMoved = true
@@ -371,6 +400,13 @@ class GameScene: SKScene {
                 else if node.name == "submitButton" {
                     print("found submit button")
                     touchNothing = true
+                    if (resetPressed) {
+                        cancelButton.isHidden = true
+                        submitButton.isHidden = true
+                        resetPressed = false
+                        return
+                    }
+                    resetButton.isHidden = false
                     submitPressed = true
                     makeMove(tempBoardPos: tempBoardPos)
                     if (checkGameOver()) {
@@ -401,6 +437,13 @@ class GameScene: SKScene {
                     print("found cancel button")
                     touchNothing = false
                     cancelPressed = true
+                    if (resetPressed) {
+                        cancelButton.isHidden = true
+                        submitButton.isHidden = true
+                        resetPressed = false
+                        return
+                    }
+                    resetButton.isHidden = false
                     cancelMove()
                     // bluePos = obp
                     // redPos = orp
@@ -410,6 +453,16 @@ class GameScene: SKScene {
                     // startingXPostion = node.position.x
                     // movingBlue = true
                     break
+                }
+                else if node.name == "resetButton" {
+                    print("found reset button")
+                    touchNothing = false
+                    resetPressed = true
+                    submitButton.isHidden = false
+                    cancelButton.isHidden = false
+                    messages.fontColor = UIColor.black
+                    currentText = messages.text!
+                    messages.text = "Are you sure you want\nto start a new game?"
                 }
                 else {
                     touchNothing = true
@@ -540,6 +593,7 @@ class GameScene: SKScene {
         if (tempBoardPos > -1) {
             submitButton.isHidden = false
             cancelButton.isHidden = false
+            resetButton.isHidden = true
             // makeMove(tempBoardPos: tempBoardPos)
             /* if (movesMade%2==0) {
                 gamePieceList[tempBoardPos].fillColor = UIColor(red: 0.3765, green: 0.6471, blue: 0.2314, alpha: 1.0) //UIColor.green
@@ -624,6 +678,7 @@ class GameScene: SKScene {
                     }
                     started = true
                     startButton.isHidden = false
+                    resetButton.isHidden = true
                     submitButton.isHidden = true
                     cancelButton.isHidden = true
                     redCounter.isHidden = true

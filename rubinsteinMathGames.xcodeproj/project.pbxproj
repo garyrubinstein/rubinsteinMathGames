@@ -15,6 +15,7 @@
 		585D35E224465AE200E1EFD1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 585D35E024465AE200E1EFD1 /* Main.storyboard */; };
 		585D35E424465AE500E1EFD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 585D35E324465AE500E1EFD1 /* Assets.xcassets */; };
 		585D35E724465AE500E1EFD1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 585D35E524465AE500E1EFD1 /* LaunchScreen.storyboard */; };
+		58C22C5426C8AA9600E283CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58C22C5326C8AA9600E283CF /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		585D35E324465AE500E1EFD1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		585D35E624465AE500E1EFD1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		585D35E824465AE500E1EFD1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		58C22C5326C8AA9600E283CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../../Downloads/AppIcons/Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				585D35E024465AE200E1EFD1 /* Main.storyboard */,
 				585D35E324465AE500E1EFD1 /* Assets.xcassets */,
 				585D35E524465AE500E1EFD1 /* LaunchScreen.storyboard */,
+				58C22C5326C8AA9600E283CF /* Assets.xcassets */,
 				585D35E824465AE500E1EFD1 /* Info.plist */,
 			);
 			path = rubinsteinMathGames;
@@ -135,6 +138,7 @@
 				585D35D924465AE200E1EFD1 /* GameScene.sks in Resources */,
 				585D35E424465AE500E1EFD1 /* Assets.xcassets in Resources */,
 				585D35E724465AE500E1EFD1 /* LaunchScreen.storyboard in Resources */,
+				58C22C5426C8AA9600E283CF /* Assets.xcassets in Resources */,
 				585D35DB24465AE200E1EFD1 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -224,7 +228,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -278,7 +282,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
