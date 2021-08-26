@@ -17,6 +17,7 @@
 		585D35E724465AE500E1EFD1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 585D35E524465AE500E1EFD1 /* LaunchScreen.storyboard */; };
 		58B08FD126D84CD900B154E3 /* mainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 58B08FD026D84CD900B154E3 /* mainMenu.sks */; };
 		58B08FD426D84F5700B154E3 /* mainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B08FD326D84F5700B154E3 /* mainMenuScene.swift */; };
+		58B08FD726D85DC600B154E3 /* instructions.mov in Resources */ = {isa = PBXBuildFile; fileRef = 58B08FD626D85DC600B154E3 /* instructions.mov */; };
 		58C22C5426C8AA9600E283CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58C22C5326C8AA9600E283CF /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		585D35E824465AE500E1EFD1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		58B08FD026D84CD900B154E3 /* mainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = mainMenu.sks; sourceTree = "<group>"; };
 		58B08FD326D84F5700B154E3 /* mainMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainMenuScene.swift; sourceTree = "<group>"; };
+		58B08FD626D85DC600B154E3 /* instructions.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = instructions.mov; sourceTree = "<group>"; };
 		58C22C5326C8AA9600E283CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../../Downloads/AppIcons/Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,6 +74,7 @@
 				585D35DC24465AE200E1EFD1 /* GameScene.swift */,
 				585D35DE24465AE200E1EFD1 /* GameViewController.swift */,
 				585D35E024465AE200E1EFD1 /* Main.storyboard */,
+				58B08FD626D85DC600B154E3 /* instructions.mov */,
 				585D35E324465AE500E1EFD1 /* Assets.xcassets */,
 				585D35E524465AE500E1EFD1 /* LaunchScreen.storyboard */,
 				58C22C5326C8AA9600E283CF /* Assets.xcassets */,
@@ -145,6 +148,7 @@
 				585D35E424465AE500E1EFD1 /* Assets.xcassets in Resources */,
 				585D35E724465AE500E1EFD1 /* LaunchScreen.storyboard in Resources */,
 				58C22C5426C8AA9600E283CF /* Assets.xcassets in Resources */,
+				58B08FD726D85DC600B154E3 /* instructions.mov in Resources */,
 				585D35DB24465AE200E1EFD1 /* Actions.sks in Resources */,
 				58B08FD126D84CD900B154E3 /* mainMenu.sks in Resources */,
 			);

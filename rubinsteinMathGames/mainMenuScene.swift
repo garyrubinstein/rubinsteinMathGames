@@ -11,6 +11,11 @@ import SpriteKit
 class MainMenuScene: SKScene {
     override func didMove(to view: SKView) {
         print("hello")
+        let sample = SKVideoNode(fileNamed: "instructions.mov")
+        sample.position = CGPoint(x: frame.midX,
+                                  y: frame.midY)
+        addChild(sample)
+        sample.play()
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("touch")

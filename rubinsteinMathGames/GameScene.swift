@@ -269,7 +269,7 @@ class GameScene: SKScene {
     func makeCounters() {
         // var redCounter: SKShapeNode = SKShapeNode(circleOfRadius: 50.0)
         redCounter = SKShapeNode(circleOfRadius: cRad)
-        redCounter.fillColor = UIColor.red
+        redCounter.fillColor = UIColor.blue
         redCounter.name = "redCounter"
         redCounter.zPosition = 10
         redCounter.position = CGPoint(x: -50, y: -450)
@@ -668,6 +668,7 @@ class GameScene: SKScene {
                 redMoveCircle.isHidden = true
                 blueMoveCircle.isHidden = true
                 messageBox.isHidden = false
+                resetButton.isHidden = true
                 if (possibleMoves == 0) {
                     messages.fontColor = UIColor.black
                     messages.text = "Draw"
@@ -797,6 +798,7 @@ class GameScene: SKScene {
                 }
                 started = true
                 startButton.isHidden = false
+                resetButton.isHidden = true
                 submitButton.isHidden = true
                 cancelButton.isHidden = true
                 redCounter.isHidden = true
