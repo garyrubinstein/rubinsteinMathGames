@@ -15,6 +15,8 @@
 		585D35E224465AE200E1EFD1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 585D35E024465AE200E1EFD1 /* Main.storyboard */; };
 		585D35E424465AE500E1EFD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 585D35E324465AE500E1EFD1 /* Assets.xcassets */; };
 		585D35E724465AE500E1EFD1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 585D35E524465AE500E1EFD1 /* LaunchScreen.storyboard */; };
+		58B08FD126D84CD900B154E3 /* mainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 58B08FD026D84CD900B154E3 /* mainMenu.sks */; };
+		58B08FD426D84F5700B154E3 /* mainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B08FD326D84F5700B154E3 /* mainMenuScene.swift */; };
 		58C22C5426C8AA9600E283CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58C22C5326C8AA9600E283CF /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +31,8 @@
 		585D35E324465AE500E1EFD1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		585D35E624465AE500E1EFD1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		585D35E824465AE500E1EFD1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		58B08FD026D84CD900B154E3 /* mainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = mainMenu.sks; sourceTree = "<group>"; };
+		58B08FD326D84F5700B154E3 /* mainMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainMenuScene.swift; sourceTree = "<group>"; };
 		58C22C5326C8AA9600E283CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../../Downloads/AppIcons/Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,6 +76,8 @@
 				585D35E524465AE500E1EFD1 /* LaunchScreen.storyboard */,
 				58C22C5326C8AA9600E283CF /* Assets.xcassets */,
 				585D35E824465AE500E1EFD1 /* Info.plist */,
+				58B08FD026D84CD900B154E3 /* mainMenu.sks */,
+				58B08FD326D84F5700B154E3 /* mainMenuScene.swift */,
 			);
 			path = rubinsteinMathGames;
 			sourceTree = "<group>";
@@ -140,6 +146,7 @@
 				585D35E724465AE500E1EFD1 /* LaunchScreen.storyboard in Resources */,
 				58C22C5426C8AA9600E283CF /* Assets.xcassets in Resources */,
 				585D35DB24465AE200E1EFD1 /* Actions.sks in Resources */,
+				58B08FD126D84CD900B154E3 /* mainMenu.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +159,7 @@
 			files = (
 				585D35DD24465AE200E1EFD1 /* GameScene.swift in Sources */,
 				585D35DF24465AE200E1EFD1 /* GameViewController.swift in Sources */,
+				58B08FD426D84F5700B154E3 /* mainMenuScene.swift in Sources */,
 				585D35D724465AE200E1EFD1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
