@@ -14,10 +14,16 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        var sceneName = "mainMenu"
+        var plus = false
+        var numGames = 10
+        if (!plus && numGames>9) {
+            sceneName = "purchasePlus"
+        }
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
-            if let scene = MainMenuScene(fileNamed: "mainMenu") {
+            if let scene = MainMenuScene(fileNamed: sceneName) {// "mainMenu") {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFit
                 
