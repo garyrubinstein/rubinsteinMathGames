@@ -21,7 +21,8 @@ class PurchasePlusScene: SKScene {
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("touch")
-        if let scene = SKScene(fileNamed: "GameScene") {
+        if let scene = MainMenuScene(fileNamed: "mainMenu") {
+        // if let scene = SKScene(fileNamed: "GameScene") {
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
             

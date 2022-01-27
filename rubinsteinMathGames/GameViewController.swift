@@ -20,16 +20,32 @@ class GameViewController: UIViewController {
         if (!plus && numGames>9) {
             sceneName = "purchasePlus"
         }
+        var plusMenu = false
+        if (plus==false && numGames>9) {
+            plusMenu = true
+        }
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
-            if let scene = MainMenuScene(fileNamed: sceneName) {// "mainMenu") {
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFit
-                
-                // Present the scene
-                view.presentScene(scene)
+            if (!plusMenu) {
+                if let scene = MainMenuScene(fileNamed: "mainMenu") {// "mainMenu") {
+                    // Set the scale mode to scale to fit the window
+                    scene.scaleMode = .aspectFit
+                    
+                    // Present the scene
+                    view.presentScene(scene)
+                }
             }
+            else {
+                if let scene = PurchasePlusScene(fileNamed: "purchasePlus") {// "mainMenu") {
+                    // Set the scale mode to scale to fit the window
+                    scene.scaleMode = .aspectFit
+                    
+                    // Present the scene
+                    view.presentScene(scene)
+                }
+            }
+
             
             
             
