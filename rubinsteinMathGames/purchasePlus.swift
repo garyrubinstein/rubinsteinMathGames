@@ -1,14 +1,14 @@
 //
-//  mainMenuScene.swift
+//  purchasePlus.swift
 //  rubinsteinMathGames
 //
-//  Created by Gary Old Mac on 8/26/21.
-//  Copyright © 2021 com.garyrubinstein. All rights reserved.
+//  Created by Gary Old Mac on 1/26/22.
+//  Copyright © 2022 com.garyrubinstein. All rights reserved.
 //
 
 import SpriteKit
 
-class MainMenuScene: SKScene {
+class PurchasePlusScene: SKScene {
     override func didMove(to view: SKView) {
         if let getBool = UserDefaults.standard.value(forKey: "plus") as? Bool {
             UserDefaults.standard.set(getBool, forKey: "plus")
@@ -18,12 +18,6 @@ class MainMenuScene: SKScene {
         }
         print("plus is")
         print(UserDefaults.standard.value(forKey: "plus")!)
-        print("hello")
-        let sample = SKVideoNode(fileNamed: "instructions.mov")
-        sample.position = CGPoint(x: frame.midX,
-                                  y: frame.midY)
-        addChild(sample)
-        sample.play()
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("touch")

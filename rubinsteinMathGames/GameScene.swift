@@ -10,6 +10,8 @@ import SpriteKit
 // import GameplayKit
 
 class GameScene: SKScene {
+    var plus = false
+    var gamesPlayed = 0
     var screenWidth: CGFloat = 0.0
     var screenHeight: CGFloat = 0.0
     var theSize: CGFloat = 0.0
@@ -188,6 +190,16 @@ class GameScene: SKScene {
 
     } // func initialize()
     func resetGame() {
+        print("Games played is now")
+        // print(gamesPlayed)
+        // gamesPlayed = gamesPlayed+1
+        if let getInt = UserDefaults.standard.value(forKey: "games") as? Int {
+            UserDefaults.standard.set(getInt+1, forKey: "games")
+        }
+        else {
+            UserDefaults.standard.set(1, forKey: "games")
+        }
+        print(UserDefaults.standard.value(forKey: "games")!)
         justStarted = true
         movesMade = 0
         messages.text = "Instructions\nTry to get 4 in a row!"
@@ -895,5 +907,14 @@ class GameScene: SKScene {
             n = i
         }
         return 0
+    }
+    func purchasePlus2() {
+        plus = true
+        UserDefaults.standard.set(true, forKey: "tester")
+        // let scene = MainMenuScene(fileNamed: "MainMenuScene")
+        // scene!.scaleMode = .aspectFit
+        // self.view?.presentScene(scene)
+
+        
     }
 }
