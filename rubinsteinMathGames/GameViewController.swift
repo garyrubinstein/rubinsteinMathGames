@@ -14,9 +14,21 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let getBool = UserDefaults.standard.value(forKey: "plus") as? Bool {
+            UserDefaults.standard.set(getBool, forKey: "plus")
+        }
+        else {
+            UserDefaults.standard.set(false, forKey: "plus")
+        }
+        if let getInt = UserDefaults.standard.value(forKey: "games") as? Int {
+            UserDefaults.standard.set(getInt+1, forKey: "games")
+        }
+        else {
+            UserDefaults.standard.set(0, forKey: "games")
+        }
         var sceneName = "mainMenu"
-        var plus = false
-        var numGames = 10
+        var plus = false // getBool
+        var numGames = 10 // getInt
         if (!plus && numGames>9) {
             sceneName = "purchasePlus"
         }
