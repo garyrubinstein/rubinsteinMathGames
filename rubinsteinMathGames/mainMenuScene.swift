@@ -9,7 +9,7 @@
 import SpriteKit
 import StoreKit
 var plus = false
-let ProductID = "permutantunlock"
+let ProductID = "unlimiteduseproductgame"
 
 class MainMenuScene: SKScene {
     override func didMove(to view: SKView) {
