@@ -8,8 +8,8 @@
 
 import SpriteKit
 import StoreKit
-var plus = false
-let ProductID = "unlimiteduseproductgame"
+// var plus = false
+// let ProductID = "unlimiteduseproductgame"
 
 class MainMenuScene: SKScene {
     override func didMove(to view: SKView) {
@@ -38,6 +38,7 @@ class MainMenuScene: SKScene {
             self.view!.presentScene(scene)
         }
     }
+    /*
     func paymentQueue(_ queue: SKPaymentQueue,
                       updatedTransactions transactions: [SKPaymentTransaction]) {
         for transaction in transactions {
@@ -138,4 +139,5 @@ class MainMenuScene: SKScene {
             SKPaymentQueue.default().finishTransaction(transaction)
         }
     }
+     */
 }
