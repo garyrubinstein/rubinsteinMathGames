@@ -74,7 +74,7 @@ class PurchasePlusScene: SKScene {
     }
     
     
-    func purchasePlus() {
+    func purchasePlus() -> Bool {
         if SKPaymentQueue.canMakePayments() {
             print("making payment")
             // plus = true
@@ -82,9 +82,11 @@ class PurchasePlusScene: SKScene {
             let paymentRequest = SKMutablePayment()
             paymentRequest.productIdentifier = ProductID
             SKPaymentQueue.default().add(paymentRequest)
+            return true
         }
         else {
             print("payment failed")
+            return false
         }
         
         // UserDefaults.standard.set(true, forKey: "tester")
@@ -93,9 +95,10 @@ class PurchasePlusScene: SKScene {
         // self.view?.presentScene(scene)
     }
     
-    func restorePlus() {
+    func restorePlus() -> Bool {
         print("In restorePlus")
         print(SKPaymentQueue.default().restoreCompletedTransactions())
+        return false
     }
 
     func purchasePlus2() {
@@ -157,7 +160,7 @@ class PurchasePlusScene: SKScene {
         cancelText.fontColor = UIColor.black
         cancelText.fontName = "AvenirNext-Bold"
         iapCancelButton.addChild(cancelText)
-        instructionsBox.addChild(iapCancelButton)
+        // instructionsBox.addChild(iapCancelButton)
         let iapBuyButton = SKShapeNode(rectOf: CGSize(width: 150, height: 60))
         iapBuyButton.fillColor = UIColor(red: 0, green: 0.6392, blue: 0.0078, alpha: 1.0)
         iapBuyButton.position = CGPoint(x: 0.0, y: -250.0)
@@ -203,13 +206,15 @@ class PurchasePlusScene: SKScene {
                         }
                         else if nodeName.hasPrefix("iapbuy"){
                             print("buy")
-                            purchasePlus()
-                            instructionsBox.isHidden = true
+                            let result2  = purchasePlus()
+                            print("purchasePluse() returned"+String(result2))
+                            // instructionsBox.isHidden = true
                         }
                         else {
                             print("restore")
-                            restorePlus()
-                            instructionsBox.isHidden = true
+                            let result = restorePlus()
+                            print("restore returned"+String(result))
+                            // instructionsBox.isHidden = true
                         }
                     }
                 }
