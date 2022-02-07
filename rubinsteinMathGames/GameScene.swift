@@ -194,13 +194,23 @@ class GameScene: SKScene {
         // print(gamesPlayed)
         // gamesPlayed = gamesPlayed+1
         if let getInt = UserDefaults.standard.value(forKey: "games") as? Int {
-            UserDefaults.standard.set(getInt+1, forKey: "games")
-        }
+            UserDefaults.standard.set(getInt+1, forKey: "games")}
         else {
             UserDefaults.standard.set(1, forKey: "games")
         }
         print(UserDefaults.standard.value(forKey: "games")!)
+        gamesPlayed = UserDefaults.standard.value(forKey: "games") as? Int ?? 0
         justStarted = true
+        if (gamesPlayed>25) {
+            var a111 = 0
+            if let scene = PurchasePlusScene(fileNamed: "purchasePlus") {// "mainMenu") {
+                // Set the scale mode to scale to fit the window
+                scene.scaleMode = .aspectFit
+                
+                // Present the scene
+                view!.presentScene(scene)
+            }
+        }
         movesMade = 0
         messages.text = "Instructions\nTry to get 4 in a row!"
         for i in 0...(35) {

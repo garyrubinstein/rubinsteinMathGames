@@ -14,12 +14,14 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if let getBool = UserDefaults.standard.value(forKey: "plus") as? Bool {
             UserDefaults.standard.set(getBool, forKey: "plus")
         }
         else {
             UserDefaults.standard.set(false, forKey: "plus")
         }
+        // plus = UserDefaults.standard.set(false, forKey: "plus") as? Bool
         if let getInt = UserDefaults.standard.value(forKey: "games") as? Int {
             UserDefaults.standard.set(getInt+1, forKey: "games")
         }
@@ -27,15 +29,18 @@ class GameViewController: UIViewController {
             UserDefaults.standard.set(0, forKey: "games")
         }
         var sceneName = "mainMenu"
-        var plus = false // getBool
-        var numGames = 10 // getInt
-        if (!plus && numGames>9) {
-            sceneName = "purchasePlus"
-        }
+        // plus = false // getBool
+        var numGames = UserDefaults.standard.value(forKey: "games") as? Int ?? 0
+        //numGames = Int.random(in: 1..<20)// getInt
+        var plus: Bool = UserDefaults.standard.value(forKey: "plus") as? Bool ?? false
         var plusMenu = false
         if (plus==false && numGames>9) {
             plusMenu = true
         }
+        print("plus,numGames,plusMenu")
+        print(plus)
+        print(numGames)
+        print(plusMenu)
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'

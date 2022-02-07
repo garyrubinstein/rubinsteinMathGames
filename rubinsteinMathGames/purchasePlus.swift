@@ -45,7 +45,7 @@ class PurchasePlusScene: SKScene {
             if transaction.transactionState == .purchased {
                 print("purchased")
                 plus = true
-                UserDefaults.standard.set(true, forKey: "tester")
+                UserDefaults.standard.set(true, forKey: "plus")
                 let scene = MainMenuScene(fileNamed: "MainMenuScene")
                 scene!.scaleMode = .aspectFit
                 self.view?.presentScene(scene)
@@ -53,7 +53,7 @@ class PurchasePlusScene: SKScene {
             else if transaction.transactionState == .restored {
                 print("restored")
                 plus = true
-                UserDefaults.standard.set(true, forKey: "tester")
+                UserDefaults.standard.set(true, forKey: "plus")
                 let scene = MainMenuScene(fileNamed: "MainMenuScene")
                 scene!.scaleMode = .aspectFit
                 self.view?.presentScene(scene)
@@ -61,7 +61,8 @@ class PurchasePlusScene: SKScene {
             else if transaction.transactionState == .failed {
                 print("failed!")
                 plus = false
-                UserDefaults.standard.set(false, forKey: "tester")
+                // plus = true // for now
+                UserDefaults.standard.set(false, forKey: "plus")
             }
             else {
                 print("transactionstate was not recognized")
@@ -202,7 +203,7 @@ class PurchasePlusScene: SKScene {
                         print("prefix iap")
                         if nodeName.hasPrefix("iapcancel") {
                             print("iap cancel")
-                            instructionsBox.isHidden = true
+                            // instructionsBox.isHidden = true
                         }
                         else if nodeName.hasPrefix("iapbuy"){
                             print("buy")
