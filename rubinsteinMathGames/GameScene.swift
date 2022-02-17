@@ -201,7 +201,7 @@ class GameScene: SKScene {
         print(UserDefaults.standard.value(forKey: "games")!)
         gamesPlayed = UserDefaults.standard.value(forKey: "games") as? Int ?? 0
         justStarted = true
-        if (gamesPlayed>25) {
+        if (gamesPlayed>9) {
             var a111 = 0
             if let scene = PurchasePlusScene(fileNamed: "purchasePlus") {// "mainMenu") {
                 // Set the scale mode to scale to fit the window

@@ -13,7 +13,7 @@ let ProductID = "unlimiteduseproductgame"
 var instructionsNode: SKNode = SKNode()
 var instructionsBox = SKShapeNode()
 
-class PurchasePlusScene: SKScene {
+class PurchasePlusScene: SKScene, SKPaymentTransactionObserver {
     override func didMove(to view: SKView) {
         if let getBool = UserDefaults.standard.value(forKey: "plus") as? Bool {
             UserDefaults.standard.set(getBool, forKey: "plus")
@@ -23,6 +23,8 @@ class PurchasePlusScene: SKScene {
         }
         print("plus is")
         print(UserDefaults.standard.value(forKey: "plus")!)
+        SKPaymentQueue.default().add(self)
+        // SKPaymentQueue.default().add(self)
         makeMenu()
     }
     /* override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

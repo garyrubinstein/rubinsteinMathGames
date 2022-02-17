@@ -32,7 +32,7 @@ class MainMenuScene: SKScene {
         print("touch")
         if let scene = SKScene(fileNamed: "GameScene") {
             // Set the scale mode to scale to fit the window
-            scene.scaleMode = .aspectFill
+            scene.scaleMode = .aspectFit
             
             // Present the scene
             self.view!.presentScene(scene)
