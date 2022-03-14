@@ -17,7 +17,8 @@
 		585D35E724465AE500E1EFD1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 585D35E524465AE500E1EFD1 /* LaunchScreen.storyboard */; };
 		585E144827A24367009C619D /* purchasePlus.sks in Resources */ = {isa = PBXBuildFile; fileRef = 585E144727A24367009C619D /* purchasePlus.sks */; };
 		585E144B27A2443F009C619D /* purchasePlus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585E144A27A2443F009C619D /* purchasePlus.swift */; };
-		587EFA1527AEDDBA001FF100 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 587EFA1427AEDDBA001FF100 /* StoreKit.framework */; };
+		589F5B0C27DDBE6E000E31B5 /* StoreKitTestCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 589F5B0B27DDBE6E000E31B5 /* StoreKitTestCertificate.cer */; };
+		589F5B0F27DDC310000E31B5 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 589F5B0E27DDC310000E31B5 /* StoreKit.framework */; };
 		58B08FD126D84CD900B154E3 /* mainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 58B08FD026D84CD900B154E3 /* mainMenu.sks */; };
 		58B08FD426D84F5700B154E3 /* mainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B08FD326D84F5700B154E3 /* mainMenuScene.swift */; };
 		58B08FD726D85DC600B154E3 /* instructions.mov in Resources */ = {isa = PBXBuildFile; fileRef = 58B08FD626D85DC600B154E3 /* instructions.mov */; };
@@ -37,7 +38,9 @@
 		585D35E824465AE500E1EFD1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		585E144727A24367009C619D /* purchasePlus.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = purchasePlus.sks; sourceTree = "<group>"; };
 		585E144A27A2443F009C619D /* purchasePlus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = purchasePlus.swift; sourceTree = "<group>"; };
-		587EFA1427AEDDBA001FF100 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		589F5B0927DDBC82000E31B5 /* StorekidConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = StorekidConfiguration.storekit; sourceTree = "<group>"; };
+		589F5B0B27DDBE6E000E31B5 /* StoreKitTestCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = StoreKitTestCertificate.cer; sourceTree = "<group>"; };
+		589F5B0E27DDC310000E31B5 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		58B08FD026D84CD900B154E3 /* mainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = mainMenu.sks; sourceTree = "<group>"; };
 		58B08FD326D84F5700B154E3 /* mainMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainMenuScene.swift; sourceTree = "<group>"; };
 		58B08FD626D85DC600B154E3 /* instructions.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = instructions.mov; sourceTree = "<group>"; };
@@ -49,7 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				587EFA1527AEDDBA001FF100 /* StoreKit.framework in Frameworks */,
+				589F5B0F27DDC310000E31B5 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +83,8 @@
 				585D35D824465AE200E1EFD1 /* GameScene.sks */,
 				585D35DA24465AE200E1EFD1 /* Actions.sks */,
 				585D35DC24465AE200E1EFD1 /* GameScene.swift */,
+				589F5B0927DDBC82000E31B5 /* StorekidConfiguration.storekit */,
+				589F5B0B27DDBE6E000E31B5 /* StoreKitTestCertificate.cer */,
 				585D35DE24465AE200E1EFD1 /* GameViewController.swift */,
 				585D35E024465AE200E1EFD1 /* Main.storyboard */,
 				58B08FD626D85DC600B154E3 /* instructions.mov */,
@@ -98,7 +103,7 @@
 		587EFA1327AEDDBA001FF100 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				587EFA1427AEDDBA001FF100 /* StoreKit.framework */,
+				589F5B0E27DDC310000E31B5 /* StoreKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -166,6 +171,7 @@
 				585D35E424465AE500E1EFD1 /* Assets.xcassets in Resources */,
 				585D35E724465AE500E1EFD1 /* LaunchScreen.storyboard in Resources */,
 				58C22C5426C8AA9600E283CF /* Assets.xcassets in Resources */,
+				589F5B0C27DDBE6E000E31B5 /* StoreKitTestCertificate.cer in Resources */,
 				58B08FD726D85DC600B154E3 /* instructions.mov in Resources */,
 				585D35DB24465AE200E1EFD1 /* Actions.sks in Resources */,
 				58B08FD126D84CD900B154E3 /* mainMenu.sks in Resources */,
@@ -329,14 +335,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 35;
 				DEVELOPMENT_TEAM = 62VDYM8N93;
 				INFOPLIST_FILE = rubinsteinMathGames/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.07;
+				MARKETING_VERSION = 1.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.garyrubinstein.rubinsteinMathGames;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -349,14 +355,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 35;
 				DEVELOPMENT_TEAM = 62VDYM8N93;
 				INFOPLIST_FILE = rubinsteinMathGames/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.07;
+				MARKETING_VERSION = 1.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.garyrubinstein.rubinsteinMathGames;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

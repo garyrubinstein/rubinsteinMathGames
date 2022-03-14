@@ -12,6 +12,7 @@ import SpriteKit
 class GameScene: SKScene {
     var plus = false
     var gamesPlayed = 0
+    var maxGames = 4
     var screenWidth: CGFloat = 0.0
     var screenHeight: CGFloat = 0.0
     var theSize: CGFloat = 0.0
@@ -201,7 +202,7 @@ class GameScene: SKScene {
         print(UserDefaults.standard.value(forKey: "games")!)
         gamesPlayed = UserDefaults.standard.value(forKey: "games") as? Int ?? 0
         justStarted = true
-        if (gamesPlayed>9) {
+        if (gamesPlayed>maxGames) {
             var a111 = 0
             if let scene = PurchasePlusScene(fileNamed: "purchasePlus") {// "mainMenu") {
                 // Set the scale mode to scale to fit the window

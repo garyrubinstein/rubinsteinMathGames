@@ -14,6 +14,8 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        // UserDefaults.standard.removeObject(forKey: "plus")
+        // UserDefaults.standard.removeObject(forKey: "games")
         
         if let getBool = UserDefaults.standard.value(forKey: "plus") as? Bool {
             UserDefaults.standard.set(getBool, forKey: "plus")
@@ -34,7 +36,7 @@ class GameViewController: UIViewController {
         //numGames = Int.random(in: 1..<20)// getInt
         var plus: Bool = UserDefaults.standard.value(forKey: "plus") as? Bool ?? false
         var plusMenu = false
-        if (plus==false && numGames>9) {
+        if (plus==false && numGames>4) {
             plusMenu = true
         }
         print("plus,numGames,plusMenu")
