@@ -10,7 +10,7 @@ import SpriteKit
 // import GameplayKit
 
 class GameScene: SKScene {
-    var plus = false
+    var plus: Bool = false
     var gamesPlayed = 0
     var maxGames = 4
     var screenWidth: CGFloat = 0.0
@@ -199,10 +199,14 @@ class GameScene: SKScene {
         else {
             UserDefaults.standard.set(1, forKey: "games")
         }
+        print("game start stored plus is changed to")
+        plus = UserDefaults.standard.value(forKey: "plus")! as! Bool
+        // print("plus variable is")
+        print(plus)
         print(UserDefaults.standard.value(forKey: "games")!)
         gamesPlayed = UserDefaults.standard.value(forKey: "games") as? Int ?? 0
         justStarted = true
-        if (gamesPlayed>maxGames) {
+        if (gamesPlayed>maxGames && !plus) {
             var a111 = 0
             if let scene = PurchasePlusScene(fileNamed: "purchasePlus") {// "mainMenu") {
                 // Set the scale mode to scale to fit the window

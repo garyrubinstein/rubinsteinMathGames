@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5838A00027E18D290031C04F /* instructions2.mov in Resources */ = {isa = PBXBuildFile; fileRef = 58389FFF27E18D280031C04F /* instructions2.mov */; };
 		585D35D724465AE200E1EFD1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585D35D624465AE200E1EFD1 /* AppDelegate.swift */; };
 		585D35D924465AE200E1EFD1 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 585D35D824465AE200E1EFD1 /* GameScene.sks */; };
 		585D35DB24465AE200E1EFD1 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 585D35DA24465AE200E1EFD1 /* Actions.sks */; };
@@ -26,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		58389FFD27E18B6A0031C04F /* game instructions.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "game instructions.mp4"; sourceTree = "<group>"; };
+		58389FFF27E18D280031C04F /* instructions2.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = instructions2.mov; sourceTree = "<group>"; };
 		585D35D324465AE100E1EFD1 /* rubinsteinMathGames.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rubinsteinMathGames.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		585D35D624465AE200E1EFD1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		585D35D824465AE200E1EFD1 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -87,6 +90,8 @@
 				589F5B0B27DDBE6E000E31B5 /* StoreKitTestCertificate.cer */,
 				585D35DE24465AE200E1EFD1 /* GameViewController.swift */,
 				585D35E024465AE200E1EFD1 /* Main.storyboard */,
+				58389FFD27E18B6A0031C04F /* game instructions.mp4 */,
+				58389FFF27E18D280031C04F /* instructions2.mov */,
 				58B08FD626D85DC600B154E3 /* instructions.mov */,
 				585D35E324465AE500E1EFD1 /* Assets.xcassets */,
 				585D35E524465AE500E1EFD1 /* LaunchScreen.storyboard */,
@@ -167,6 +172,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				585D35E224465AE200E1EFD1 /* Main.storyboard in Resources */,
+				5838A00027E18D290031C04F /* instructions2.mov in Resources */,
 				585D35D924465AE200E1EFD1 /* GameScene.sks in Resources */,
 				585D35E424465AE500E1EFD1 /* Assets.xcassets in Resources */,
 				585D35E724465AE500E1EFD1 /* LaunchScreen.storyboard in Resources */,

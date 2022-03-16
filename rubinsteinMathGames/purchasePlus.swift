@@ -24,7 +24,7 @@ class PurchasePlusScene: SKScene, SKPaymentTransactionObserver {
         }
         print("stored plus is")
         plus = UserDefaults.standard.value(forKey: "plus")! as! Bool
-        print("plus variable is")
+        // print("plus variable is")
         print(plus)
         SKPaymentQueue.default().add(self)
         // SKPaymentQueue.default().add(self)
@@ -125,7 +125,11 @@ class PurchasePlusScene: SKScene, SKPaymentTransactionObserver {
             if transaction.transactionState == .purchased {
                 print("purchased")
                 plus = true
-                UserDefaults.standard.set(true, forKey: "tester")
+                UserDefaults.standard.set(true, forKey: "plus")
+                print("stored plus is changed to")
+                plus = UserDefaults.standard.value(forKey: "plus")! as! Bool
+                // print("plus variable is")
+                print(plus)
                 let scene = MainMenuScene(fileNamed: "mainMenu")
                 scene!.scaleMode = .aspectFit
                 self.view?.presentScene(scene)
@@ -133,7 +137,11 @@ class PurchasePlusScene: SKScene, SKPaymentTransactionObserver {
             else if transaction.transactionState == .restored {
                 print("restored")
                 plus = true
-                UserDefaults.standard.set(true, forKey: "tester")
+                UserDefaults.standard.set(true, forKey: "plus")
+                print("stored plus is changed to")
+                plus = UserDefaults.standard.value(forKey: "plus")! as! Bool
+                // print("plus variable is")
+                print(plus)
                 let scene = MainMenuScene(fileNamed: "mainMenu")
                 scene!.scaleMode = .aspectFit
                 self.view?.presentScene(scene)
@@ -141,7 +149,7 @@ class PurchasePlusScene: SKScene, SKPaymentTransactionObserver {
             else if transaction.transactionState == .failed {
                 print("failed!")
                 plus = false
-                UserDefaults.standard.set(false, forKey: "tester")
+                UserDefaults.standard.set(false, forKey: "plus")
             }
             else {
                 print("transactionstate was not recognized")
