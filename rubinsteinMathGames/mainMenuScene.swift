@@ -12,6 +12,8 @@ import StoreKit
 // let ProductID = "unlimiteduseproductgame"
 
 class MainMenuScene: SKScene {
+    var startButton: SKShapeNode = SKShapeNode()
+    var startButtonLabel: SKLabelNode = SKLabelNode()
     override func didMove(to view: SKView) {
         if let getBool = UserDefaults.standard.value(forKey: "plus") as? Bool {
             UserDefaults.standard.set(getBool, forKey: "plus")
@@ -19,10 +21,25 @@ class MainMenuScene: SKScene {
         else {
             UserDefaults.standard.set(false, forKey: "plus")
         }
-        print("plus is")
-        print(UserDefaults.standard.value(forKey: "plus")!)
-        print("hello")
-        let sample = SKVideoNode(fileNamed: "instructions.mov")
+        // print("plus is")
+        // print(UserDefaults.standard.value(forKey: "plus")!)
+        // print("hello")
+        var buttonWidth: CGFloat = 250.0
+        var buttonHeight: CGFloat = 150.0
+        startButton = SKShapeNode(rect: CGRect(x: -buttonWidth/2, y: -450-buttonHeight/2, width: buttonWidth, height: buttonHeight))
+        startButton.fillColor = UIColor.red
+        startButton.name = "startButton"
+        startButton.zPosition = 5
+        // var startLabel: SKLabelNode = SKLabelNode()
+        startButtonLabel.text = "Start"
+        startButtonLabel.fontName="Optima-ExtraBlack"
+        startButtonLabel.fontSize = 48
+        startButtonLabel.zPosition = 10
+        startButtonLabel.position = CGPoint(x: 0, y: -450)
+        startButton.addChild(startButtonLabel)
+        // redCounter.position = CGPoint(x: 0, y: -450)
+        self.addChild(startButton)
+        let sample = SKVideoNode(fileNamed: "instructions2.mov")
         sample.position = CGPoint(x: frame.midX,
                                   y: frame.midY)
         addChild(sample)
