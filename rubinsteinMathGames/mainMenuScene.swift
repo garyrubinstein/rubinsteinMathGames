@@ -14,6 +14,8 @@ import StoreKit
 class MainMenuScene: SKScene {
     var startButton: SKShapeNode = SKShapeNode()
     var startButtonLabel: SKLabelNode = SKLabelNode()
+    var instructionsButton: SKShapeNode = SKShapeNode()
+    var instructionsButtonLabel: SKLabelNode = SKLabelNode()
     override func didMove(to view: SKView) {
         if let getBool = UserDefaults.standard.value(forKey: "plus") as? Bool {
             UserDefaults.standard.set(getBool, forKey: "plus")
@@ -39,21 +41,70 @@ class MainMenuScene: SKScene {
         startButton.addChild(startButtonLabel)
         // redCounter.position = CGPoint(x: 0, y: -450)
         self.addChild(startButton)
+        
+        instructionsButton = SKShapeNode(rect: CGRect(x: -buttonWidth/2, y: -250-buttonHeight/2, width: buttonWidth, height: buttonHeight))
+        instructionsButton.fillColor = UIColor.systemGreen
+        instructionsButton.name = "instructionsButton"
+        instructionsButton.zPosition = 5
+        // var startLabel: SKLabelNode = SKLabelNode()
+        instructionsButtonLabel.text = "How To Play"
+        instructionsButtonLabel.fontName="Optima-ExtraBlack"
+        instructionsButtonLabel.fontSize = 40
+        instructionsButtonLabel.zPosition = 10
+        instructionsButtonLabel.position = CGPoint(x: 0, y: -250)
+        instructionsButton.addChild(instructionsButtonLabel)
+        // redCounter.position = CGPoint(x: 0, y: -450)
+        self.addChild(instructionsButton)
+        
+        /*
         let sample = SKVideoNode(fileNamed: "instructions2.mov")
         sample.position = CGPoint(x: frame.midX,
                                   y: frame.midY)
         addChild(sample)
         sample.play()
+        */
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("touch")
-        if let scene = SKScene(fileNamed: "GameScene") {
+        for touch in touches {
+            let location = touch.location(in: self)
+            let touchedNode = self.nodes(at: location)
+            for node in touchedNode {
+                print("nodename")
+                // print(node.name)
+                if node.name == "startButton" {
+                    print("startButton")
+                    if let scene = SKScene(fileNamed: "GameScene") {
+                        // Set the scale mode to scale to fit the window
+                        scene.scaleMode = .aspectFit
+                        
+                        // Present the scene
+                        self.view!.presentScene(scene)
+                    }
+                }
+                if node.name == "instructionsButton" {
+                    print("instructionsButton")
+                    node.isHidden = true
+                    let sample = SKVideoNode(fileNamed: "instructions2.mov")
+                    sample.position = CGPoint(x: frame.midX,
+                                              y: frame.midY)
+                    addChild(sample)
+                    sample.play()
+                }
+            }
+        }
+/*        for t in touches {
+            let location = t.location(in: self)
+            let touchedNode = atPoint(location)
+            print(touchedNode.name ?? "noname")
+        } */
+        /* if let scene = SKScene(fileNamed: "GameScene") {
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFit
             
             // Present the scene
             self.view!.presentScene(scene)
-        }
+        } */
     }
     /*
     func paymentQueue(_ queue: SKPaymentQueue,
