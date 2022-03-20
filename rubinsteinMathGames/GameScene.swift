@@ -50,6 +50,8 @@ class GameScene: SKScene {
     var startButtonLabel: SKLabelNode = SKLabelNode()
     var resetButton: SKShapeNode = SKShapeNode()
     var resetButtonLabel: SKLabelNode = SKLabelNode()
+    var menuButton: SKShapeNode = SKShapeNode()
+    var menuButtonLabel: SKLabelNode = SKLabelNode()
     var submitButton: SKShapeNode = SKShapeNode()
     var submitButtonLabel: SKLabelNode = SKLabelNode()
     var cancelButton: SKShapeNode = SKShapeNode()
@@ -126,7 +128,7 @@ class GameScene: SKScene {
         messages.fontColor = .black
         messages.verticalAlignmentMode = .center
         messages.horizontalAlignmentMode = .center
-        messages.fontSize = 24.0
+        messages.fontSize = 48.0
         messages.zPosition = 1
         messages.position = CGPoint(x: 0, y: 0)
         messages.zPosition = 10
@@ -191,6 +193,8 @@ class GameScene: SKScene {
 
     } // func initialize()
     func resetGame() {
+        submitButtonLabel.text = "Submit"
+        cancelButtonLabel.text = "Cancel"
         print("Games played is now")
         // print(gamesPlayed)
         // gamesPlayed = gamesPlayed+1
@@ -233,6 +237,7 @@ class GameScene: SKScene {
         redCounter.position = CGPoint(x: -50, y: -450)
         blueCounter.position = CGPoint(x: 50, y: -450)
         resetButton.isHidden = true
+        menuButton.isHidden = true
         redMoveCircle.isHidden = true
         blueMoveCircle.isHidden = true
         
@@ -379,6 +384,25 @@ class GameScene: SKScene {
         resetButton.addChild(resetButtonLabel)
         resetButton.isHidden = true
         self.addChild(resetButton)
+        
+        menuButton = SKShapeNode(circleOfRadius: 60.0)    //(rect: CGRect(x: -buttonWidth/2+offset, y: -450-buttonHeight/2, width: buttonWidth, height: buttonHeight))
+        menuButton.position.x = 200.0
+        menuButton.position.y = 600.0
+        menuButton.fillColor = UIColor.green
+        menuButton.name = "menuButton"
+        menuButton.zPosition = 10
+        // var startLabel: SKLabelNode = SKLabelNode()
+        
+        menuButtonLabel.fontName="Optima-ExtraBlack"
+        menuButtonLabel.fontSize = 32
+        menuButtonLabel.zPosition = 15
+        menuButtonLabel.fontColor = UIColor.white
+        menuButtonLabel.text = "menu"
+        // menuButtonLabel.isHidden = true
+        menuButtonLabel.position = CGPoint(x: 0.0, y: 0.0)
+        menuButton.addChild(menuButtonLabel)
+        menuButton.isHidden = true
+        self.addChild(menuButton)
     }
     
 
@@ -476,6 +500,8 @@ class GameScene: SKScene {
                         resetPressed = false
                         messages.text = currentText
                         messages.fontColor = currentColor
+                        submitButtonLabel.text = "Submit"
+                        cancelButtonLabel.text = "Cancel"
                         return
                     }
                     resetButton.isHidden = false
@@ -499,6 +525,8 @@ class GameScene: SKScene {
                     messages.fontColor = UIColor.black
                     currentText = messages.text!
                     messages.text = "Are you sure you want\nto start a new game?"
+                    submitButtonLabel.text = "YES"
+                    cancelButtonLabel.text = "NO"
                 }
                 else {
                     touchNothing = true

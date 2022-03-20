@@ -16,6 +16,7 @@ class MainMenuScene: SKScene {
     var startButtonLabel: SKLabelNode = SKLabelNode()
     var instructionsButton: SKShapeNode = SKShapeNode()
     var instructionsButtonLabel: SKLabelNode = SKLabelNode()
+    var sample: SKVideoNode = SKVideoNode()
     override func didMove(to view: SKView) {
         if let getBool = UserDefaults.standard.value(forKey: "plus") as? Bool {
             UserDefaults.standard.set(getBool, forKey: "plus")
@@ -56,6 +57,12 @@ class MainMenuScene: SKScene {
         // redCounter.position = CGPoint(x: 0, y: -450)
         self.addChild(instructionsButton)
         
+        sample = SKVideoNode(fileNamed: "instructions2.mov")
+        sample.position = CGPoint(x: frame.midX,
+                                  y: frame.midY+200)
+        addChild(sample)
+        // sample.play()
+        
         /*
         let sample = SKVideoNode(fileNamed: "instructions2.mov")
         sample.position = CGPoint(x: frame.midX,
@@ -84,11 +91,13 @@ class MainMenuScene: SKScene {
                 }
                 if node.name == "instructionsButton" {
                     print("instructionsButton")
-                    node.isHidden = true
+                    // node.isHidden = true
+                    /*
                     let sample = SKVideoNode(fileNamed: "instructions2.mov")
                     sample.position = CGPoint(x: frame.midX,
-                                              y: frame.midY)
+                                              y: frame.midY+200)
                     addChild(sample)
+                    */
                     sample.play()
                 }
             }
